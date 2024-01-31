@@ -28,12 +28,12 @@ int exec_cmd(char *cmd, char **env)
 	while (*elmnt_path && access(path_test, X_OK))
 	{
 		free(path_test);
-		(*elmnt_path)++;
-		path_test = ft_strjoin_three(*elmnt_path, "/", arg[0]);
+		elmnt_path++;
+		if (*elmnt_path)
+			path_test = ft_strjoin_three(*elmnt_path, "/", arg[0]);
 		if (!path_test)
 			return (1);
 	}
-	ft_printf("path test %s\n", path_test);
 	return (execve(path_test, arg, env));
 }
 

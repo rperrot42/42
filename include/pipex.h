@@ -7,4 +7,5 @@
 #include <sys/wait.h>
 
 int	exec_cmd(char *cmd, char **env);
+int	pipep(int argc, char **argv, char **env);
 #endif
