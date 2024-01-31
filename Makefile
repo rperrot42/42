@@ -1,6 +1,7 @@
 MAKE = make
 
-SRC = main.c
+SRC = main.c \
+	exec.c
 
 NAME = pipex
 

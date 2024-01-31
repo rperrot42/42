@@ -6,4 +6,5 @@
 #include "./../libft/libft.h"
 #include <sys/wait.h>
 
+int	exec_cmd(char *cmd, char **env);
 #endif
