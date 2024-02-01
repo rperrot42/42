@@ -18,7 +18,7 @@ int	pipep(int argc, char **argv, char **env)
 	int		fd_file_exit;
 	pid_t	pid;
 	int		fd[2];
-	int 	fd_output;
+	int 	fd_in;
 	int		i;
     int stdouut;
     FILE *file_ptr;
@@ -32,37 +32,50 @@ int	pipep(int argc, char **argv, char **env)
     file_ptr = fdopen(stdouut, "w");
 	//stdout = dup(1);
 	if (pid == 0) {
+		fprintf(file_ptr, "bonjour %d\n", getpid());
+		//fprintf(file_ptr, "fd de 1: %d\n", fd[1]);
 		close(fd_file_exit);
 		close(fd[0]);
 		dup2(fd_file_enter, 0);
 		dup2(fd[1], 1);
-
+		close(fd[0]);
+		close(fd_file_enter);
 		exec_cmd(argv[2], env);
-		return (0);
 	}
+	fd_in = fd[0];
+	close(fd[1]);
 	i = 2;
 	while (++i < argc - 2)
 	{
+		pipe(fd);
 		pid = fork();
-        fprintf(file_ptr, "%d %d\n", fd[0], fd[1]);
-        fd_output = fd[1];
+        //fprintf(file_ptr, "%d %d\n", fd[0], fd[1]);
         pipe(fd);
-        close(fd[0]);
-        fd[0] = fd_output;
 		if (pid == 0)
 		{
-            dup2(fd[0], 0);
+			sleep(2);
+			fprintf(file_ptr, "bonjour je suis celui du milieu %d\n", getpid());
+			//fprintf(file_ptr, "%d %d\n", fd[0], fd[1]);
+            dup2(fd_in, 0);
             dup2(fd[1], 1);
+			close(fd[1]);
+			close(fd[0]);
+			close(fd_in);
             close(fd_file_enter);
             close(fd_file_exit);
             exec_cmd(argv[i], env);
 		}
+		close(fd_in);
+		fd_in = fd[0];
+		close(fd[1]);
 	}
-    fprintf(file_ptr, "%d %d\n", fd[0], fd[1]);
+	//ft_printf("fd de 0: %d\n", fd[0]);
+    //fprintf(file_ptr, "%d %d\n", fd[0], fd[1]);
 	close(fd_file_enter);
-	close(fd[1]);
 	dup2(fd[0], 0);
 	dup2(fd_file_exit, 1);
+	close(fd[0]);
+	close(fd_file_exit);
 	exec_cmd(argv[argc - 2], env);
 	return (0);
 }

@@ -35,15 +35,14 @@ $(DIR_OBJS):
 	mkdir -p $(DIR_OBJS)
 
 clean:
-
+	rm -rf $(DIR_OBJS)
 	$(MAKE) -C $(LIBFT_DIRECTORY) clean
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIRECTORY)
 
-fclean:
-	rm -rf $(DIR_OBJS)
-	$(MAKE) -C $(LIBFT_DIRECTORY) fclean
+fclean: clean
+	rm -f $(NAME)
 
 re: fclean all
 
