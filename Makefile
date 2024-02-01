@@ -26,10 +26,10 @@ OBJ = $(addprefix $(DIR_OBJS)/, $(SRC:.c=.o))
 all:$(NAME)
 
 $(NAME): $(OBJ) | $(LIBFT)
-	gcc $(FLAGS) $^ -o $@ $(LIBFT)
+	gcc -g3 $(FLAGS) $^ -o $@ $(LIBFT)
 
 $(DIR_OBJS)/%.o: $(SRC_PATH)%.c | $(DIR_OBJS)
-	gcc $(FLAGS) -c $< -o $@
+	gcc -g3 $(FLAGS) -c $< -o $@
 
 $(DIR_OBJS):
 	mkdir -p $(DIR_OBJS)
