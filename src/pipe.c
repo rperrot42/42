@@ -16,7 +16,6 @@
 int first_execve(char **argv, char **env, int fd[2])
 {
 	int	fd_file_enter;
-
 	fd_file_enter = open(argv[1], O_RDONLY);
 	close(fd[0]);
 	dup2(fd_file_enter, 0);
@@ -30,8 +29,7 @@ int first_execve(char **argv, char **env, int fd[2])
 int last_execve(char **argv, char **env, int fd[2], int argc)
 {
 	int	fd_file_exit;
-
-	fd_file_exit = open(argv[argc - 1], O_WRONLY);
+	fd_file_exit = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	dup2(fd[0], 0);
 	dup2(fd_file_exit, 1);
 	close(fd[0]);
@@ -58,7 +56,7 @@ int mid_execve(char **argv, char **env, int fd[2], int argc)
 			dup2(fd[1], 1);
 			close(fd[1]);
 			close(fd_in);
-			return (execv(argv[i], env));
+			return (exec_cmd(argv[i], env));
 		}
 		close(fd[1]);
 		close(fd_in);
@@ -72,7 +70,6 @@ int	pipep(int argc, char **argv, char **env)
 	int		fd[2];
     int stdouut;
 
-    ft_printf("%d\n", getpid());
 	pipe(fd);
 	pid = fork();
     stdouut = dup(1);

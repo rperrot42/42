@@ -34,7 +34,12 @@ int exec_cmd(char *cmd, char **env)
 		if (!path_test)
 			return (1);
 	}
-	return (execve(path_test, arg, env));
+	if (access(path_test, X_OK)) {
+		ft_putstr_fd(path_test, 2);
+		ft_putstr_fd("jaime les trains", 2);
+	}
+	execve(path_test, arg, env);
+	return(0);
 }
 
 static int	search_path_env(char **env)
