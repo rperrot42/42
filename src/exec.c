@@ -34,11 +34,11 @@ int exec_cmd(char *cmd, char **env)
 		if (!path_test)
 			return (1);
 	}
-	if (access(path_test, X_OK)) {
-		ft_putstr_fd(path_test, 2);
-		ft_putstr_fd("jaime les trains", 2);
+	if (execve("error", arg, env) == -1)
+	{
+		free(path_test);
+		strror(errno);
 	}
-	execve(path_test, arg, env);
 	return(0);
 }
 
