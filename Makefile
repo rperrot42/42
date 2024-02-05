@@ -41,8 +41,10 @@ clean:
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIRECTORY)
 
-fclean: clean
+fclean:
 	rm -f $(NAME)
+	rm -rf $(DIR_OBJS)
+	$(MAKE) -C $(LIBFT_DIRECTORY) fclean
 
 re: fclean all
 

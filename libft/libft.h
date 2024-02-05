@@ -115,4 +115,5 @@ char			*ft_free_line(char *last, char *return_value);
 size_t			ft_strlen_line(char *s);
 char			*ft_strjoin_three(char const *s1, char const *s2, \
 char const *s3);
+size_t			ft_findnewline(char *s);
 #endif
