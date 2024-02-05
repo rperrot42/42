@@ -15,6 +15,7 @@
 
 int main (int argc, char **argv, char **env)
 {
+	errno = 0;
 	t_bool here_doc;
 
 	here_doc = FALSE;

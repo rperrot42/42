@@ -34,11 +34,8 @@ int exec_cmd(char *cmd, char **env)
 		if (!path_test)
 			return (1);
 	}
-	if (execve("error", arg, env) == -1)
-	{
+	if (execve(path_test, arg, env) == -1)
 		free(path_test);
-		strror(errno);
-	}
 	return(0);
 }
 
