@@ -14,6 +14,8 @@
 
 static int	search_path_env(char **env);
 
+static void	error_execve(char *message, char *path_test);
+
 int exec_cmd(char *cmd, char **env)
 {
 	char	**elmnt_path;
@@ -28,14 +30,19 @@ int exec_cmd(char *cmd, char **env)
 	while (*elmnt_path && access(path_test, X_OK))
 	{
 		free(path_test);
+		path_test = NULL;
 		elmnt_path++;
 		if (*elmnt_path)
+		{
 			path_test = ft_strjoin_three(*elmnt_path, "/", arg[0]);
-		if (!path_test)
-			return (1);
+			if (!path_test)
+				return (1);
+		}
 	}
-	if (execve(path_test, arg, env) == -1)
-		free(path_test);
+	if (path_test == NULL)
+		error_execve("No such file or directory", path_test);
+	else if (execve(path_test, arg, env) == -1)
+		error_execve("No such file or directory", path_test);
 	return(0);
 }
 
@@ -47,4 +54,17 @@ static int	search_path_env(char **env)
 	while (env[i] && ft_strncmp("PATH", env[i], 4))
 		i++;
 	return (i);
+}
+
+static void	error_execve(char *message, char *path_test)
+{
+	close(0);
+	close(1);
+	if (path_test == NULL)
+		ft_putstr_fd(message, 2);
+	else {
+		perror(message);
+		free(path_test);
+	}
+	exit(1);
 }

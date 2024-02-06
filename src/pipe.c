@@ -13,34 +13,53 @@
 #include "./../include/pipex.h"
 #include <stdio.h>
 
-int	read_here_doc(char *limiter, int *fd_file_enter)
+int	create_name(char **name)
+{
+	int	fd_rand;
+
+	fd_rand = open("/dev/random", O_RDONLY);
+	if (fd_rand == -1)
+		return (-1);
+	*name = malloc(sizeof(char) * 25);
+	if (!(*name))
+		return (-2);
+	if (read(fd_rand, *name, 25) == -1)
+	{
+		free(name);
+		close(fd_rand);
+		return (-3);
+	}
+	return (0);
+}
+
+int	read_here_doc(char *limiter, int *fd_file_enter, char *name)
 {
 	char	*line;
 
-	*fd_file_enter = open("a",  O_WRONLY | O_CREAT | O_TRUNC, "0777");
+	*fd_file_enter = open(name ,  O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	line = get_next_line(0);
+
 	while (ft_strncmp(line, limiter,ft_findnewline(line) - 1))
 	{
 
 		if (ft_strncmp(line, limiter,ft_findnewline(line) - 1))
 			write(*fd_file_enter, line, ft_findnewline(line));
-
 		free(line);
 		line = get_next_line(0);
 	}
 	free(line);
 	close(*fd_file_enter);
-	*fd_file_enter = open("a",  O_RDONLY);
+	*fd_file_enter = open(name,  O_RDONLY);
 	return (0);
 }
 
-int first_execve(char **argv, char **env, int fd[2], t_bool here_doc)
+int first_execve(char **argv, char **env, int fd[2], t_bool here_doc, char *name)
 {
 	int	fd_file_enter;
 	if (here_doc == FALSE)
 		fd_file_enter = open(argv[1], O_RDONLY);
 	else
-		read_here_doc(argv[2], &fd_file_enter);
+		read_here_doc(argv[2], &fd_file_enter, name);
 	close(fd[0]);
 	dup2(fd_file_enter, 0);
 	dup2(fd[1], 1);
@@ -51,10 +70,7 @@ int first_execve(char **argv, char **env, int fd[2], t_bool here_doc)
 	if (here_doc == FALSE)
 		return (exec_cmd(argv[2], env));
 	else
-	{
-		unlink("a");
 		return (exec_cmd(argv[3], env));
-	}
 }
 
 int last_execve(char **argv, char **env, int fd[2], int argc)
@@ -102,20 +118,23 @@ int	pipep(int argc, char **argv, char **env, t_bool here_doc)
 	pid_t	pid;
 	int		fd[2];
     int		stdouut;
+	char	*name;
 
-	here_doc = FALSE;
-	if (!ft_strncmp("here_doc", argv[1], 9))
-		here_doc = TRUE;
+	if (here_doc == TRUE)
+		if (create_name(&name) < 0)
+			return (-1);
 	pipe(fd);
 	pid = fork();
     stdouut = dup(1);
 	if (pid == 0) {
 		close(stdouut);
-		first_execve(argv, env, fd, here_doc);
+		first_execve(argv, env, fd, here_doc, name);
 	}
 	close(fd[1]);
 	if ((argc > 5 && here_doc == FALSE) || (argc > 6 && here_doc == TRUE))
 		fd[0] = mid_execve(argv, env, fd, argc);
-	last_execve(argv, env, fd, argc);
+	if (here_doc == TRUE)
+		unlink(name);
+	ft_printf("%d\n", last_execve(argv, env, fd, argc));
 	return (0);
 }
