@@ -12,23 +12,37 @@
 
 #include "./../include/pipex.h"
 #include <stdio.h>
+void	replace_slash(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+			str[i] = 'A';
+		i++;
+	}
+}
 
 int	create_name(char **name)
 {
 	int	fd_rand;
 
-	fd_rand = open("/dev/random", O_RDONLY);
+	fd_rand = open("/dev/urandom", O_RDONLY);
 	if (fd_rand == -1)
 		return (-1);
 	*name = malloc(sizeof(char) * 25);
 	if (!(*name))
 		return (-2);
-	if (read(fd_rand, *name, 25) == -1)
+	if (read(fd_rand, *name, 24) == -1)
 	{
 		free(name);
 		close(fd_rand);
 		return (-3);
 	}
+	(*name)[24] = 0;
+	replace_slash(*name);
 	return (0);
 }
 
@@ -36,10 +50,9 @@ int	read_here_doc(char *limiter, int *fd_file_enter, char *name)
 {
 	char	*line;
 
-	*fd_file_enter = open(name ,  O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	*fd_file_enter = open(name ,  O_WRONLY | O_CREAT, 0777);
 	line = get_next_line(0);
-
-	while (ft_strncmp(line, limiter,ft_findnewline(line) - 1))
+	while (ft_findnewline(line) <= 1 || ft_strncmp(line, limiter,ft_findnewline(line) - 1))
 	{
 
 		if (ft_strncmp(line, limiter,ft_findnewline(line) - 1))
@@ -134,7 +147,10 @@ int	pipep(int argc, char **argv, char **env, t_bool here_doc)
 	if ((argc > 5 && here_doc == FALSE) || (argc > 6 && here_doc == TRUE))
 		fd[0] = mid_execve(argv, env, fd, argc);
 	if (here_doc == TRUE)
+	{
+		wait(NULL);
 		unlink(name);
+	}
 	ft_printf("%d\n", last_execve(argv, env, fd, argc));
 	return (0);
 }
