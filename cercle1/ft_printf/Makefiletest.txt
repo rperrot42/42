@@ -1,0 +1,41 @@
+MAKE = make
+
+PATH_LIBFT = libft
+
+NAME_LIBFT = libft.a
+
+SRC = ft_printf.c
+
+NAME = libftprintf.a
+
+INCLUDE = ft_print.h
+
+CFLAGS = -Werror -Wall -Wextra
+
+OBJ = $(SRC:.c=.o)
+
+GCC = cc
+
+$(NAME):libft $(OBJ)
+	ar rcs $(NAME) $(OBJ) -L
+
+libft:
+	$(MAKE) -C $(PATH_LIBFT)
+
+%.o: %.c
+	$(GCC) $(CFLAGS) -Llibft -lft -c $< -o $@ 
+
+all: $(NAME)
+
+re: fclean all
+	$(MAKE) re -C $(PATH_LIBFT)
+
+clean:
+	$(MAKE) clean -C $(PATH_LIBFT)
+	rm -f $(OBJ)
+
+fclean: clean
+	$(MAKE) fclean -C $(PATH_LIBFT)
+	rm -f $(NAME)
+
+.PHONY: all re clean fclean
