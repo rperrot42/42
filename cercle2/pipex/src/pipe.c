@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "./../include/pipex.h"
-#include <stdio.h>
+
 void	replace_slash(char *str)
 {
 	int i;
@@ -34,13 +34,14 @@ int	create_name(char **name)
 		return (-1);
 	*name = malloc(sizeof(char) * 25);
 	if (!(*name))
-		return (-2);
+		return (close(fd_rand), -2);
 	if (read(fd_rand, *name, 24) == -1)
 	{
-		free(name);
+		free(*name);
 		close(fd_rand);
 		return (-3);
 	}
+	close(fd_rand);
 	(*name)[24] = 0;
 	replace_slash(*name);
 	return (0);
@@ -50,7 +51,8 @@ int	read_here_doc(char *limiter, int *fd_file_enter, char *name)
 {
 	char	*line;
 
-	*fd_file_enter = open(name ,  O_WRONLY | O_CREAT, 0777);
+	*fd_file_enter = open(name,  O_WRONLY | O_CREAT, 0777);
+
 	line = get_next_line(0);
 	while (ft_findnewline(line) <= 1 || ft_strncmp(line, limiter,ft_findnewline(line) - 1))
 	{
@@ -60,15 +62,17 @@ int	read_here_doc(char *limiter, int *fd_file_enter, char *name)
 		free(line);
 		line = get_next_line(0);
 	}
-	free(line);
 	close(*fd_file_enter);
-	*fd_file_enter = open(name,  O_RDONLY);
+	*fd_file_enter = open(name,  O_RDONLY | O_CREAT, 0777);
+	unlink(name);
+	free(line);
 	return (0);
 }
 
 int first_execve(char **argv, char **env, int fd[2], t_bool here_doc, char *name)
 {
 	int	fd_file_enter;
+
 	if (here_doc == FALSE)
 		fd_file_enter = open(argv[1], O_RDONLY);
 	else
@@ -108,6 +112,7 @@ int mid_execve(char **argv, char **env, int fd[2], int argc)
 		i = 3;
 	while (++i < argc - 2)
 	{
+		wait(NULL);
 		fd_in = fd[0];
 		pipe(fd);
 		pid = fork();
@@ -130,27 +135,21 @@ int	pipep(int argc, char **argv, char **env, t_bool here_doc)
 {
 	pid_t	pid;
 	int		fd[2];
-    int		stdouut;
 	char	*name;
 
 	if (here_doc == TRUE)
 		if (create_name(&name) < 0)
 			return (-1);
-	pipe(fd);
-	pid = fork();
-    stdouut = dup(1);
-	if (pid == 0) {
-		close(stdouut);
+	if (pipe(fd) == -1)
+		return (free(name), -1);
+	if (pid = fork() == -1);
+		return (free(name), -1);
+	if (pid == 0)
 		first_execve(argv, env, fd, here_doc, name);
-	}
 	close(fd[1]);
 	if ((argc > 5 && here_doc == FALSE) || (argc > 6 && here_doc == TRUE))
 		fd[0] = mid_execve(argv, env, fd, argc);
-	if (here_doc == TRUE)
-	{
-		wait(NULL);
-		unlink(name);
-	}
+	wait(NULL);
 	ft_printf("%d\n", last_execve(argv, env, fd, argc));
 	return (0);
 }

@@ -9,4 +9,5 @@
 #include <string.h>
 int	exec_cmd(char *cmd, char **env);
 int	pipep(int argc, char **argv, char **env, t_bool here_doc);
+void	wait_nb(int nb);
 #endif
