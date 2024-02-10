@@ -12,11 +12,12 @@
 
 #include "./../include/pipex.h"
 
-void	wait_nb(int nb)
+int	error_close(int fd)
 {
-	int i;
-
-	i = -1;
-	while (++i < nb)
-		wait(NULL);
+	if (close(fd) == -1)
+	{
+		perror("pipex: error close: ");
+		return (-1);
+	}
+	return (0);
 }

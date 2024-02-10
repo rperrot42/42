@@ -3,7 +3,7 @@ MAKE = make
 SRC = main.c \
 	exec.c \
 	pipe.c \
-	wait.c
+	error.c
 
 NAME = pipex
 
