@@ -2,7 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/42.cercle2.pipex" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/pipex42" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
   </component>
 </project>
