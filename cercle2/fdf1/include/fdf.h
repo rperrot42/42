@@ -15,21 +15,32 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <mlx.h>
+#include "../mlx_linux/mlx.h"
 #include "./../libft/libft.h"
 
 #define HEIGHT 600
 #define WIDTH 800
 
 
-
 typedef struct	s_point
 {
 	short	x;
 	short	y;
-	short	z;
 	int		color;
 }	t_point;
+
+typedef struct s_point_3d
+{
+	short	z;
+	short	color;
+}	t_point_3d;
+
+typedef struct	s_matrix_3d
+{
+	int	width;
+	int	height;
+	t_point_3d **matrix_point;
+}	t_matrix_3d;
 
 typedef struct s_info_segment
 {
@@ -58,8 +69,9 @@ typedef struct	s_vars {
 void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
 
 void	create_line_all(t_data *img, t_point a, t_point b);
-int create_color(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
+int		create_color(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
 void 	init_color_line(t_point *a, t_point *b, t_info_segment *info_segment);
 void	create_color_line(t_point *a, t_info_segment *info_segment);
-void	close_vars(t_vars *vars);
+int 	close_vars(t_vars *vars);
+t_list 	*read_file_fdf(char *name_file, t_vars *vars);
 #endif //FDF_FDF_H

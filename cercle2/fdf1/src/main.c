@@ -12,28 +12,12 @@
 
 #include "./../include/fdf.h"
 
-void close_vars(t_vars *vars)
+
+int close_vars(t_vars *vars)
 {
 	mlx_destroy_window(vars->mlx, vars->win);
 	mlx_destroy_image(vars->mlx, vars->data->img);
 	exit(0);
-}
-
-int print_souris(int keycode, t_vars *vars)
-{
-	ft_printf("%d souris\n", keycode);
-	return (0);
-}
-
-int mouvement_souris(int keycode, int x, int y,  t_vars *vars)
-{
-	ft_printf("%d %d %d mouvemnet souris\n",keycode, x, y);
-	//mlx_pixel_put(vars->mlx, vars->win, x, y, create_color(0,255,255,255));
-	return (0);
-}
-int a(int keycode, int x, int y, void *param)
-{
-	ft_printf("craapace\n");
 	return (0);
 }
 void create_16_line(t_data *img)
@@ -44,8 +28,8 @@ void create_16_line(t_data *img)
 	a.x = 400;
 	a.y = 300;
 	b.y = 20;
-	b.color=0xFFFF0000;
-	a.color=0x0000FFFF;
+	b.color=0x09a5e5f3;
+	a.color=0x578a5d5f;
 	int	i = -1;
 	while (++i < 4)
 	{
@@ -77,16 +61,24 @@ void create_16_line(t_data *img)
 
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_vars	vars;
 	t_data 	img;
+	t_list	*a;
+
+	if (argc == 2) {
+		a = read_file_fdf(argv[1], &vars);
+		while (a != NULL) {
+			ft_printf("%s", a->content);
+			a = a->next;
+		}
+	}
 	vars.mlx = mlx_init();
 	vars.data = &img;
 	img.img = mlx_new_image(vars.mlx,WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								 &img.endian);
-
 	vars.win = mlx_new_window(vars.mlx, 800, 600, "Hello world!");
 	create_16_line(&img);
 	mlx_hook(vars.win, 17, 1L<<0, close_vars, &vars);

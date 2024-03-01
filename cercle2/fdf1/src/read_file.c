@@ -12,52 +12,75 @@
 
 #include "./../include/fdf.h"
 
-void	read_file_fdf(char *name_file, t_vars *vars)
+static
+
+static t_bool	add_elmnt_lst_file(int fd, t_vars *vars, t_list **lst_file);
+
+t_list 	*read_file_fdf(char *name_file, t_vars *vars)
 {
 	int		fd;
-	char	*line;
-	int 	i;
+	t_bool	is_finish;
+	t_list	*lst_file;
+	int	i;
 
+	lst_file = NULL;
 	fd = open(name_file, O_RDONLY);
+	i = 0;
 	if (fd == -1)
 		close_vars(vars);
-	line = get_next_line(fd);
-	i = 0;
-	while (line)
-	{
-		free(line);
-		line = get_next_line(fd);
-		i++;
-	}
+	is_finish = FALSE;
+	while (++i && is_finish == FALSE)
+		is_finish = add_elmnt_lst_file(fd, vars, &lst_file);
+	return (lst_file);
 }
 
-int *count_line(char *name_file, t_vars *vars)
+static t_bool	add_elmnt_lst_file(int fd, t_vars *vars, t_list **lst_file)
 {
-	int		fd;
-	int		x_y[2];
-	char	c[1000];
-	int		r;
+	char	*line;
+	t_list	*line_file;
 
-	fd = open(name_file, O_RDONLY);
-	if (fd == -1)
-		close_vars(vars);
-	x_y[0] = 0;
-	if (read(fd, c, 1) < 0)
-		close_vars(vars);
-	while (*c && *c !='\n')
+	line = get_next_line(fd);
+	if (!line)
+		return TRUE;
+	line_file = ft_lstnew(line);
+	if (!line_file)
 	{
-		if (*c == ' ')
-			x_y[0] += 1;
-		r = read(fd, c, 1);
-		if (r < 0)
-			close_vars(vars);
-		else if (r == 0)
-			*c = 0;
+		ft_lstclear(lst_file, free);
+		close_vars(vars);
 	}
-	if (*c != '\n')
+	ft_lstadd_back(lst_file, line_file);
+	return FALSE;
+}
+
+static int size_line(char *line)
+{
+	int nb_space;
+
+	nb_space = 0;
+	while (*line) {
+		if (*line == ' ')
+			nb_space++;
+		line++;
+	}
+	return (++nb_space);
+}
+
+static t_point_3d *create_line_3d(char *line, int width)
+{
+	t_point_3d *line_point;
+	int i;
+
+	line_point = malloc(width * sizeof(t_point_3d));
+	if (!line_point)
+		return (NULL);
+	i = -1;
+	while (++i < width)
 	{
-		x_y[1] = 1;
-		return (x_y);
+		line_point[i].z = ft_atoi(line);
 	}
+
+}
+static t_point_3d	**create_matrix_point3d(t_list **lst_file, int height)
+{
 
 }

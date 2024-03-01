@@ -36,7 +36,7 @@ void	create_line_all(t_data *img, t_point a, t_point b)
 		create_line(img, &b, &a, &info_segment);
 	}
 }
-
+#include <math.h>
 static void	create_line(t_data *img, t_point *a, t_point *b, t_info_segment *inf_seg)
 {
 	a->x = a->x - 1;

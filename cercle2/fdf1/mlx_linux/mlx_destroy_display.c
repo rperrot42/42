@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_crt_lstdouble.c                                 :+:      :+:    :+:   */
+/*   mlx_destroy_display.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rperrot <rperrot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 12:31:10 by rperrot           #+#    #+#             */
-/*   Updated: 2024/01/17 12:41:21 by rperrot          ###   ########.fr       */
+/*   Created: 2020/10/03 18:56:35 by mg                #+#    #+#             */
+/*   Updated: 2020/10/04 01:55:35 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "mlx_int.h"
 
-t_list_double	*ft_crt_lstdouble(int value)
+int	mlx_destroy_display(t_xvar *xvar)
 {
-	t_list_double	*new_listdouble;
-
-	new_listdouble = malloc(sizeof(t_list_double));
-	if (!new_listdouble)
-		return (NULL);
-	new_listdouble -> value = value;
-	return (new_listdouble);
+	XCloseDisplay(xvar->display);
 }
