@@ -65,7 +65,7 @@ NAME = libft.a
 
 CC = gcc
 
-FLAGS = -Werror -Wall -Wextra
+FLAGS = -Werror -Wall -Wextra -g3
 
 OBJ = $(addprefix $(DIR_OBJS)/, $(SRC:.c=.o))
 

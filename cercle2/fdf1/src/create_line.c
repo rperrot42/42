@@ -12,13 +12,13 @@
 
 #include "./../include/fdf.h"
 
-static void swap_point(t_point *a, t_point *b, t_info_segment *info_segment);
+static void swap_point(t_pixel *a, t_pixel *b, t_info_segment *info_segment);
 
-static void init_info_segment(t_point *a, t_point *b, t_info_segment *info_segment);
+static void init_info_segment(t_pixel *a, t_pixel *b, t_info_segment *info_segment);
 
-static void create_line(t_data *img, t_point *a, t_point *b, t_info_segment *inf_seg);
+static void create_line(t_data *img, t_pixel *a, t_pixel *b, t_info_segment *inf_seg);
 
-void	create_line_all(t_data *img, t_point a, t_point b)
+void	create_line_all(t_data *img, t_pixel a, t_pixel b)
 {
 	t_info_segment info_segment;
 	init_info_segment(&a, &b, &info_segment);
@@ -37,7 +37,7 @@ void	create_line_all(t_data *img, t_point a, t_point b)
 	}
 }
 
-static void	create_line(t_data *img, t_point *a, t_point *b, t_info_segment *inf_seg)
+static void	create_line(t_data *img, t_pixel *a, t_pixel *b, t_info_segment *inf_seg)
 {
 	a->x = a->x - 1;
 	while (++a->x <= b->x)
@@ -56,7 +56,7 @@ static void	create_line(t_data *img, t_point *a, t_point *b, t_info_segment *inf
 	}
 }
 
-static void swap_point(t_point *a, t_point *b, t_info_segment *info_segment)
+static void swap_point(t_pixel *a, t_pixel *b, t_info_segment *info_segment)
 {
 	short	swap;
 
@@ -72,7 +72,7 @@ static void swap_point(t_point *a, t_point *b, t_info_segment *info_segment)
 	info_segment->dy_is_sup_dx = TRUE;
 }
 
-static void init_info_segment(t_point *a, t_point *b, t_info_segment *info_segment)
+static void init_info_segment(t_pixel *a, t_pixel *b, t_info_segment *info_segment)
 {
 
 	info_segment -> eps = 0;

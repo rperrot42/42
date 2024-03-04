@@ -19,5 +19,6 @@ void	free_matrix_3d(t_matrix_3d *matrix_3d)
 	i = -1;
 	while (++i < matrix_3d -> height)
 		free(matrix_3d ->matrix_point[i]);
+	free(matrix_3d -> matrix_point);
 	free(matrix_3d);
 }

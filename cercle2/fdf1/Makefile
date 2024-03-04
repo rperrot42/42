@@ -8,7 +8,7 @@ DIR_OBJS = .obj
 
 LIBFT_DIRECTORY = ./libft/
 
-FLAGS = -Werror -Wall -Wextra -Iinclude
+FLAGS = -g3
 
 INClUDE = fdf.h
 
@@ -16,17 +16,16 @@ SRC = create_color.c create_line.c main.c read_file.c create_point3d.c free_all_
 
 SRC_PATH = src/
 
-CC = gcc
+CC = cc
 
 OBJ = $(addprefix $(DIR_OBJS)/, $(SRC:.c=.o))
 
 all:$(NAME)
 
 $(DIR_OBJS)/%.o: $(SRC_PATH)%.c | $(DIR_OBJS)
-		$(CC) $(FLAGS) -Imlx -c $< -o $@
-
+	$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 $(NAME): $(OBJ)| $(LIBFT)
-	$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LIBFT)
+	$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) $(LIBFT)
 
 $(DIR_OBJS):
 	mkdir -p $(DIR_OBJS)

@@ -31,6 +31,8 @@ t_matrix_3d 	*read_file_fdf(char *name_file)
 	is_finish = FALSE;
 	while (is_finish == FALSE && ++i)
 		is_finish = add_elmnt_lst_file(fd, &lst_file);
+	if (close(fd) != -1)
+		return (ft_lstclear(&lst_file, free), NULL);
 	return (create_matrix_point3d(&lst_file, i - 1));
 }
 
@@ -45,6 +47,8 @@ static t_bool	add_elmnt_lst_file(int fd, t_list **lst_file)
 	line_file = ft_lstnew(line);
 	if (!line_file)
 	{
+		close(fd);
+		free(line);
 		ft_lstclear(lst_file, free);
 		exit(1);
 	}
@@ -93,18 +97,19 @@ static t_matrix_3d 	*create_matrix_point3d(t_list **lst_file, int height)
 	if (!matrix_3d)
 		return (ft_lstclear(&first_line, free), NULL);
 	matrix_3d -> matrix_point = malloc(height * sizeof(t_point_3d *));
-	width = size_line((char *)(*lst_file) -> content);
 	if (!matrix_3d->matrix_point)
 		return (ft_lstclear(&first_line, free), NULL);
+	width = size_line((char *)(*lst_file) -> content);
 	i = -1;
 	while (++i < height)
 	{
 		matrix_3d -> matrix_point[i] = create_line_3d((char *)(*lst_file) -> content, width);
-		if (!matrix_3d -> matrix_point)
+		if (!matrix_3d -> matrix_point[i])
 			return (ft_lstclear(&first_line, free), free_matrix_3d(matrix_3d), NULL);
 		*lst_file = (*lst_file) -> next;
 	}
 	matrix_3d -> width = width;
 	matrix_3d -> height = height;
+	ft_lstclear(&first_line, free);
 	return (matrix_3d);
 }

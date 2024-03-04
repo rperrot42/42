@@ -23,24 +23,40 @@
 
 #define BASE_10 "0123456789"
 #define BASE_HEXA "0123456789ABCDEF"
-typedef struct	s_point
+
+typedef struct	s_pixel
 {
 	short			x;
 	short			y;
 	unsigned int	color;
-}	t_point;
+}	t_pixel;
 
-typedef struct s_point_3d
+typedef struct	s_matrix_2d
+{
+	int			width;
+	int			height;
+	t_pixel		**matrix_pixel;
+}	t_matrix_2d;
+
+typedef	struct	s_point_z
+{
+	short	z;
+	short	color;
+}	t_point_z;
+
+typedef struct	s_point_3d
 {
 	short			z;
+	short 			x;
+	short 			y;
 	unsigned int	color;
 }	t_point_3d;
 
 typedef struct	s_matrix_3d
 {
-	int	width;
-	int	height;
-	t_point_3d **matrix_point;
+	int			width;
+	int			height;
+	t_point_z	**matrix_point;
 }	t_matrix_3d;
 
 typedef struct s_info_segment
@@ -61,18 +77,19 @@ typedef struct	s_data {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_data;
+}	t_data;
+
 typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
 	t_data	*data;
-}				t_vars;
+}	t_vars;
 void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
 
-void	create_line_all(t_data *img, t_point a, t_point b);
+void	create_line_all(t_data *img, t_pixel a, t_pixel b);
 int		create_color(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
-void 	init_color_line(t_point *a, t_point *b, t_info_segment *info_segment);
-void	create_color_line(t_point *a, t_info_segment *info_segment);
+void 	init_color_line(t_pixel *a, t_pixel *b, t_info_segment *info_segment);
+void	create_color_line(t_pixel *a, t_info_segment *info_segment);
 int 	close_vars(t_vars *vars);
 t_matrix_3d 	*read_file_fdf(char *name_file);
 t_point_3d	create_point3d(char **line);
