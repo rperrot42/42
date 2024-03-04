@@ -63,7 +63,7 @@ DIR_OBJS = .obj
 
 NAME = libft.a
 
-CC = cc
+CC = gcc
 
 FLAGS = -Werror -Wall -Wextra
 

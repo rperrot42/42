@@ -12,7 +12,6 @@
 
 #include "./../include/fdf.h"
 
-
 int close_vars(t_vars *vars)
 {
 	mlx_destroy_window(vars->mlx, vars->win);
@@ -63,17 +62,24 @@ void create_16_line(t_data *img)
 
 int	main(int argc, char **argv)
 {
-	t_vars	vars;
-	t_data 	img;
-	t_list	*a;
+	t_matrix_3d 	*a;
+	int i;
+	int j;
 
 	if (argc == 2) {
-		a = read_file_fdf(argv[1], &vars);
-		while (a != NULL) {
-			ft_printf("%s", a->content);
-			a = a->next;
+		a = malloc(100);
+		a = read_file_fdf(argv[1]);
+		i = -1;
+		while (++i < a-> height)
+		{
+			j = -1;
+			while (++j < a->width)
+			{
+				ft_printf("%d %u\n", a->matrix_point[i][j].color,  a->matrix_point[i][j].z);
+			}
 		}
 	}
+	/*
 	vars.mlx = mlx_init();
 	vars.data = &img;
 	img.img = mlx_new_image(vars.mlx,WIDTH, HEIGHT);
@@ -83,5 +89,5 @@ int	main(int argc, char **argv)
 	create_16_line(&img);
 	mlx_hook(vars.win, 17, 1L<<0, close_vars, &vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-	mlx_loop(vars.mlx);
+	mlx_loop(vars.mlx);*/
 }

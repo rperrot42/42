@@ -12,7 +12,7 @@
 
 #include "libft.h"
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 10000
 #endif
 
 char	*ft_free_line(char *last, char *return_value)
