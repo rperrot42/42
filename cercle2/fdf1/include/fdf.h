@@ -32,19 +32,6 @@ typedef struct	s_pixel
 	unsigned int	color;
 }	t_pixel;
 
-typedef struct	s_display_matrix
-{
-	int			width;
-	int			height;
-	t_pixel		**display_pixel;
-}	t_display_matrix;
-
-typedef	struct	s_point_z
-{
-	short	z;
-	short	color;
-}	t_point_z;
-
 typedef struct	s_point_3d
 {
 	short			z;
@@ -52,6 +39,20 @@ typedef struct	s_point_3d
 	short 			y;
 	unsigned int	color;
 }	t_point_3d;
+
+typedef struct	s_display_matrix
+{
+	int			width;
+	int			height;
+	t_point_3d		**display_pixel;
+}	t_display_matrix;
+
+typedef	struct	s_point_z
+{
+	short			z;
+	unsigned int	color;
+}	t_point_z;
+
 
 typedef struct	s_matrix_3d
 {
@@ -95,14 +96,16 @@ typedef struct	s_all_matrix
 
 void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
 
-void	create_line_all(t_data *img, t_pixel a, t_pixel b);
+void	create_line_all(t_data *img, t_point_3d a, t_point_3d b);
 int		create_color(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
-void 	init_color_line(t_pixel *a, t_pixel *b, t_info_segment *info_segment);
-void	create_color_line(t_pixel *a, t_info_segment *info_segment);
+void 	init_color_line(t_point_3d *a, t_point_3d *b, t_info_segment *info_segment);
+void	create_color_line(t_point_3d *a, t_info_segment *info_segment);
 int 	close_vars(t_vars *vars);
 t_matrix_3d 	*read_file_fdf(char *name_file);
-t_point_3d	create_point3d(char **line);
+t_point_z	create_point3d(char **line);
 void	free_matrix_3d(t_matrix_3d *matrix_3d);
 t_bool	alloc_matrix_2d(t_all_matrix *all_matrix);
 void	free_display_matrix(t_display_matrix *display_matrix);
+void	transforme_matrix_3d_in2d(t_all_matrix *all_matrix);
+void	print_all_ligne(t_display_matrix *display_matrix, t_data *img);
 #endif //FDF_FDF_H

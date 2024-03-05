@@ -25,7 +25,7 @@ void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color)
 	*(unsigned int *)dst = color;
 }
 
-void 	init_color_line(t_pixel *a, t_pixel *b, t_info_segment *info_segment)
+void 	init_color_line(t_point_3d *a, t_point_3d *b, t_info_segment *info_segment)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ void 	init_color_line(t_pixel *a, t_pixel *b, t_info_segment *info_segment)
 	}
 }
 
-void	create_color_line(t_pixel *a, t_info_segment *info_segment)
+void	create_color_line(t_point_3d *a, t_info_segment *info_segment)
 {
 	int i;
 

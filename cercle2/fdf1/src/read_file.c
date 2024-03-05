@@ -61,22 +61,26 @@ static int size_line(char *line)
 	int nb_space;
 
 	nb_space = 0;
-	if (*line == ' ')
+	while (*line == ' ')
 		line++;
 	while (*line) {
 		if (*line == ' ')
+		{
+			while (*line == ' ')
+				line++;
 			nb_space++;
+		}
 		line++;
 	}
 	return (++nb_space);
 }
 
-static t_point_3d *create_line_3d(char *line, int width)
+static t_point_z *create_line_3d(char *line, int width)
 {
-	t_point_3d *line_point;
+	t_point_z *line_point;
 	int i;
 
-	line_point = malloc(width * sizeof(t_point_3d));
+	line_point = malloc(width * sizeof(t_point_z));
 	if (!line_point)
 		return (NULL);
 	i = -1;

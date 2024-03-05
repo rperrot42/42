@@ -8,15 +8,15 @@ DIR_OBJS = .obj
 
 LIBFT_DIRECTORY = ./libft/
 
-FLAGS = -g3
+FLAGS = -g3 -Wall -Werror -Wextra
 
 INClUDE = fdf.h
 
-SRC = create_color.c create_line.c main.c read_file.c create_point3d.c free_all_info.c alloc_matrix_2d.c
+SRC = create_color.c create_line.c main.c read_file.c create_point3d.c free_all_info.c alloc_matrix_2d.c transform_in_2d.c print_all_line.c
 
 SRC_PATH = src/
 
-CC = cc
+CC = gcc
 
 OS := $(shell uname)
 

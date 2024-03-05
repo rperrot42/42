@@ -19,6 +19,7 @@ int close_vars(t_vars *vars)
 	exit(0);
 	return (0);
 }
+/*
 void create_16_line(t_data *img)
 {
 	t_pixel	a;
@@ -59,43 +60,28 @@ void create_16_line(t_data *img)
 	}
 
 }
-
+*/
 int	main(int argc, char **argv)
 {
 	t_vars			vars;
 	t_all_matrix 	a;
 	t_data 			img;
-	int i;
-	int j;
-
 
 	if (argc == 2) {
 		a.matrix_3_d = read_file_fdf(argv[1]);
-		if (!a.matrix_3_d)
-			exit(1);
-		i = -1;
-		while (++i < a.matrix_3_d-> height)
-		{
-			j = -1;
-			while (++j < a.matrix_3_d->width)
-			{
-				ft_printf("%d %u\n", a.matrix_3_d->matrix_point[i][j].color,  a.matrix_3_d->matrix_point[i][j].z);
-			}
-		}
 		alloc_matrix_2d(&a);
-		free_matrix_3d(a.matrix_3_d);
-
+		transforme_matrix_3d_in2d(&a);
 	}
-	/*
 	vars.mlx = mlx_init();
 	vars.data = &img;
 	img.img = mlx_new_image(vars.mlx,WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								 &img.endian);
 	vars.win = mlx_new_window(vars.mlx, 800, 600, "Hello world!");
-	create_16_line(&img);
+	if (argc == 2)
+		print_all_ligne(a.display_matrix, &img);
 	mlx_hook(vars.win, 17, 1L<<0, close_vars, &vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	mlx_loop(vars.mlx);
-	 */
+
 }
