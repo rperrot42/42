@@ -12,7 +12,7 @@
 
 #include "./../include/fdf.h"
 
-void	transforme_matrix_3d_in2d(t_matrix_3d, int **)
+void	transforme_matrix_3d_in2d(t)
 {
 
 }

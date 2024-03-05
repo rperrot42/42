@@ -24,6 +24,7 @@
 #define BASE_10 "0123456789"
 #define BASE_HEXA "0123456789ABCDEF"
 
+
 typedef struct	s_pixel
 {
 	short			x;
@@ -31,12 +32,12 @@ typedef struct	s_pixel
 	unsigned int	color;
 }	t_pixel;
 
-typedef struct	s_matrix_2d
+typedef struct	s_display_matrix
 {
 	int			width;
 	int			height;
-	t_pixel		**matrix_pixel;
-}	t_matrix_2d;
+	t_pixel		**display_pixel;
+}	t_display_matrix;
 
 typedef	struct	s_point_z
 {
@@ -84,6 +85,14 @@ typedef struct	s_vars {
 	void	*win;
 	t_data	*data;
 }	t_vars;
+
+typedef struct	s_all_matrix
+{
+	t_matrix_3d 		*matrix_3_d;
+	t_display_matrix	*display_matrix;
+}	t_all_matrix;
+
+
 void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
 
 void	create_line_all(t_data *img, t_pixel a, t_pixel b);
@@ -94,4 +103,6 @@ int 	close_vars(t_vars *vars);
 t_matrix_3d 	*read_file_fdf(char *name_file);
 t_point_3d	create_point3d(char **line);
 void	free_matrix_3d(t_matrix_3d *matrix_3d);
+t_bool	alloc_matrix_2d(t_all_matrix *all_matrix);
+void	free_display_matrix(t_display_matrix *display_matrix);
 #endif //FDF_FDF_H

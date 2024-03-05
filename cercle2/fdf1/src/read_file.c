@@ -31,7 +31,7 @@ t_matrix_3d 	*read_file_fdf(char *name_file)
 	is_finish = FALSE;
 	while (is_finish == FALSE && ++i)
 		is_finish = add_elmnt_lst_file(fd, &lst_file);
-	if (close(fd) != -1)
+	if (close(fd) == -1)
 		return (ft_lstclear(&lst_file, free), NULL);
 	return (create_matrix_point3d(&lst_file, i - 1));
 }

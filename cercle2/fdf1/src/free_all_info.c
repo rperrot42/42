@@ -22,3 +22,18 @@ void	free_matrix_3d(t_matrix_3d *matrix_3d)
 	free(matrix_3d -> matrix_point);
 	free(matrix_3d);
 }
+
+void	free_display_matrix(t_display_matrix *display_matrix)
+{
+	int	i;
+
+	i = -1;
+	while (++i < display_matrix -> height)
+	{
+		if (!display_matrix->display_pixel[i])
+			break;
+		free(display_matrix->display_pixel[i]);
+	}
+	free(display_matrix ->display_pixel);
+	free(display_matrix);
+}
