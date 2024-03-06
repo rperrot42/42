@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <mlx.h>
+#include <math.h>
 #include "./../libft/libft.h"
 
 #define HEIGHT 600
@@ -93,6 +94,13 @@ typedef struct	s_all_matrix
 	t_display_matrix	*display_matrix;
 }	t_all_matrix;
 
+typedef struct	s_rotation
+{
+	float	rotation_x;
+	float	rotation_y;
+	float	rotation_z;
+}	t_rotation;
+
 
 void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
 
@@ -108,4 +116,8 @@ t_bool	alloc_matrix_2d(t_all_matrix *all_matrix);
 void	free_display_matrix(t_display_matrix *display_matrix);
 void	transforme_matrix_3d_in2d(t_all_matrix *all_matrix);
 void	print_all_ligne(t_display_matrix *display_matrix, t_data *img);
+void	multiplication_matrix_3x3(float matrix_1[3][3], float matrix_2[3][3], float matrix_result[3][3]);
+void	create_rotation_matrix(t_rotation *rotation, float matrix_result[3][3]);
+void	multiplication_matrix_3x1(float matrix_1[3][3], float matrix_2[3], float matrix_result[3]);
+
 #endif //FDF_FDF_H

@@ -63,6 +63,26 @@ void create_16_line(t_data *img)
 */
 int	main(int argc, char **argv)
 {
+	/*
+	float m3[3][3] = {{89, 4545, 12},
+					  {51, 23 , 9},
+					  {89, 45, 3}};
+	float m1[3] = {5,4,8};
+	float m2[3];
+	multiplication_matrix_3x1(m3, m1, m2);
+	//t_rotation rot;
+
+	rot.rotation_x = 1.0471975512;
+	rot.rotation_y =  1.0471975512;
+	rot.rotation_z =  1.0471975512;
+	create_rotation_matrix(&rot, m3);
+	int i= -1;
+	while (++i < 3) {
+		printf("%g %g %g\n", m3[i][0], m3[i][1], m3[i][2]);
+	}
+	printf("%g %g %g\n", m2[0], m2[1], m2[2]);
+	*/
+
 	t_vars			vars;
 	t_all_matrix 	a;
 	t_data 			img;
