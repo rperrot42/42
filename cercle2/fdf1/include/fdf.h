@@ -24,7 +24,8 @@
 
 #define BASE_10 "0123456789"
 #define BASE_HEXA "0123456789ABCDEF"
-
+#define ROTATION_X_START 0
+#define ROTATION_Y_START 0
 
 typedef struct	s_pixel
 {
@@ -62,6 +63,24 @@ typedef struct	s_matrix_3d
 	t_point_z	**matrix_point;
 }	t_matrix_3d;
 
+typedef struct	s_rotation
+{
+	float	rotation_x;
+	float	rotation_y;
+	float	rotation_z;
+}	t_rotation;
+
+
+typedef struct s_display_info
+{
+	float		distance_z_min;
+	float		multiplier_value_z;
+	float		distance_point;
+	short 		move_y;
+	short		move_x;
+	t_rotation	*rotation;
+}	t_display_info;
+
 typedef struct s_info_segment
 {
 	short			dx;
@@ -94,12 +113,6 @@ typedef struct	s_all_matrix
 	t_display_matrix	*display_matrix;
 }	t_all_matrix;
 
-typedef struct	s_rotation
-{
-	float	rotation_x;
-	float	rotation_y;
-	float	rotation_z;
-}	t_rotation;
 
 
 void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
@@ -114,10 +127,10 @@ t_point_z	create_point3d(char **line);
 void	free_matrix_3d(t_matrix_3d *matrix_3d);
 t_bool	alloc_matrix_2d(t_all_matrix *all_matrix);
 void	free_display_matrix(t_display_matrix *display_matrix);
-void	transforme_matrix_3d_in2d(t_all_matrix *all_matrix);
+void	transforme_matrix_3d_in2d(t_all_matrix *all_matrix, t_display_info *display_info);
 void	print_all_ligne(t_display_matrix *display_matrix, t_data *img);
 void	multiplication_matrix_3x3(float matrix_1[3][3], float matrix_2[3][3], float matrix_result[3][3]);
 void	create_rotation_matrix(t_rotation *rotation, float matrix_result[3][3]);
 void	multiplication_matrix_3x1(float matrix_1[3][3], float matrix_2[3], float matrix_result[3]);
-
+t_display_info 	*create_display_info(int nb_point_width, int nb_point_height);
 #endif //FDF_FDF_H
