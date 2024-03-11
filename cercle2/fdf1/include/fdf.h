@@ -6,38 +6,46 @@
 /*   By: rperrot <rperrot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:46:16 by rperrot           #+#    #+#             */
-/*   Updated: 2024/02/10 17:46:25 by rperrot          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:05:54 by rperrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_FDF_H
-#define FDF_FDF_H
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <mlx.h>
-#include <math.h>
-#include "./../libft/libft.h"
+#ifndef FDF_H
+# define FDF_H
+# include "./../libft/libft.h"
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <mlx.h>
+# include <math.h>
 
-#define	KEYCODE_X 7
-#define KEYCODE_Z 6
-#define KEYCODE_M 46
-#define KEYCODE_N 45
-#define KEYCODE_W 13
-#define KEYCODE_A 0
-#define KEYCODE_S 1
-#define KEYCODE_D 2
-#define KEYCODE_I 34
-#define KEYCODE_K 40
-#define KEYCODE_L 37
-#define KEYCODE_J 38
-#define HEIGHT 600
-#define WIDTH 800
-#define ROTATION_MOVE 0.001
-#define BASE_10 "0123456789"
-#define BASE_HEXA "0123456789ABCDEF"
-#define ROTATION_X_START 0
-#define ROTATION_Y_START 0
+#ifdef __APPLE__
+#  define KEYCODE_I 34
+#  define KEYCODE_K 40
+#  define KEYCODE_L 37
+#  define KEYCODE_J 38
+#  define KEYCODE_X 7
+#  define KEYCODE_Z 6
+#  define KEYCODE_M 46
+#  define KEYCODE_N 45
+#else
+#  define KEYCODE_X 120
+#  define KEYCODE_Z 122
+#  define KEYCODE_M 109
+#  define KEYCODE_N 110
+#  define KEYCODE_I 34
+#  define KEYCODE_K 40
+#  define KEYCODE_L 37
+#  define KEYCODE_J 38
+#endif
+
+# define HEIGHT 600
+# define WIDTH 800
+# define ROTATION_MOVE 0.001
+# define BASE_10 "0123456789"
+# define BASE_HEXA "0123456789ABCDEF"
+# define ROTATION_X_START 0
+# define ROTATION_Y_START 0
 
 typedef enum	e_move
 {

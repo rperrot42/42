@@ -20,6 +20,7 @@ void	init_info_event(t_info_event *info_event)
 
 int	button_press(int keycode, int x, int y, t_info_event *info_event)
 {
+	ft_printf("%d keycode\n", keycode);
 	if (keycode == 1)
 	{
 		info_event->left_click = TRUE;
@@ -39,6 +40,7 @@ int	button_press(int keycode, int x, int y, t_info_event *info_event)
 
 int	button_release(int keycode, int x, int y, t_info_event *info_event)
 {
+	ft_printf("%d keycode\n", keycode);
 	if (keycode == 1)
 	{
 		info_event->left_click = FALSE;
