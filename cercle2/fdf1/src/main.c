@@ -117,8 +117,8 @@ int	main(int argc, char **argv)
 		all_info.vars = &vars;
 		all_info.info_event = &info_event;
 		mlx_hook(vars.win, 4, (1L<<2)		, button_press, &info_event);
-		mlx_hook(vars.win, 5, (0)	, button_release, &info_event);
-		mlx_hook(vars.win, 6, (0)	, motion_notify, &all_info);
+		mlx_hook(vars.win, 5, (1L<<3)		, button_release, &info_event);
+		mlx_hook(vars.win, 6, (1L<<6)	, motion_notify, &all_info);
 		mlx_hook(vars.win, 17, 1L << 0, close_vars, &vars);
 		mlx_hook(vars.win, 2, 1L << 0, keycode_move, &all_info);
 		mlx_put_image_to_window(vars.mlx, vars.win, img_info.img, 0, 0);

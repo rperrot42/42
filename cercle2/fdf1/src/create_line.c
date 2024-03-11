@@ -37,7 +37,8 @@ void	create_line_all(t_img_info *img, t_point_3d a, t_point_3d b, t_bool	black_c
 		info_segment.avanc = (info_segment.dy >= 0) - (info_segment.dy < 0);
 		if (black_color == FALSE)
 			init_color_line(&b, &a, &info_segment);
-		create_line(img, &b, &a, &info_segment);
+		if (info_segment.dx != 0)
+			create_line(img, &b, &a, &info_segment);
 	}
 }
 

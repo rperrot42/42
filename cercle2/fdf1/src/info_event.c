@@ -21,13 +21,13 @@ void	init_info_event(t_info_event *info_event)
 int	button_press(int keycode, int x, int y, t_info_event *info_event)
 {
 	ft_printf("%d keycode\n", keycode);
-	if (keycode == 1)
+	if (keycode == LEFT_CLICK)
 	{
 		info_event->left_click = TRUE;
 		info_event->position_x = x;
 		info_event->position_y = y;
 	}
-	else if (keycode == 2)
+	else if (keycode == RIGHT_CLICK)
 	{
 		info_event->right_click = TRUE;
 		info_event->position_x = x;
@@ -41,13 +41,13 @@ int	button_press(int keycode, int x, int y, t_info_event *info_event)
 int	button_release(int keycode, int x, int y, t_info_event *info_event)
 {
 	ft_printf("%d keycode\n", keycode);
-	if (keycode == 1)
+	if (keycode == LEFT_CLICK)
 	{
 		info_event->left_click = FALSE;
 		info_event->position_x = x;
 		info_event->position_y = y;
 	}
-	else if (keycode == 2)
+	else if (keycode == RIGHT_CLICK)
 	{
 		info_event->right_click = FALSE;
 		info_event->position_x = x;
@@ -59,6 +59,7 @@ int	button_release(int keycode, int x, int y, t_info_event *info_event)
 
 int	motion_notify(int x, int y, t_all_info *all_info)
 {
+	ft_printf("%d %d\n", x, y);
 	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)
 	{
 		all_info->info_event->left_click = FALSE;

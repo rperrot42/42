@@ -19,7 +19,7 @@
 # include <mlx.h>
 # include <math.h>
 
-#ifdef __APPLE__
+# ifdef __APPLE__
 #  define KEYCODE_I 34
 #  define KEYCODE_K 40
 #  define KEYCODE_L 37
@@ -28,17 +28,19 @@
 #  define KEYCODE_Z 6
 #  define KEYCODE_M 46
 #  define KEYCODE_N 45
-#else
+#  define RIGHT_CLICK 2
+# else
 #  define KEYCODE_X 120
 #  define KEYCODE_Z 122
 #  define KEYCODE_M 109
 #  define KEYCODE_N 110
-#  define KEYCODE_I 34
-#  define KEYCODE_K 40
-#  define KEYCODE_L 37
-#  define KEYCODE_J 38
-#endif
-
+#  define KEYCODE_I 105
+#  define KEYCODE_K 107
+#  define KEYCODE_L 108
+#  define KEYCODE_J 106
+#  define RIGHT_CLICK 3
+# endif
+# define LEFT_CLICK 1
 # define HEIGHT 600
 # define WIDTH 800
 # define ROTATION_MOVE 0.001
@@ -46,7 +48,6 @@
 # define BASE_HEXA "0123456789ABCDEF"
 # define ROTATION_X_START 0
 # define ROTATION_Y_START 0
-
 typedef enum	e_move
 {
 	UP,
@@ -111,10 +112,10 @@ typedef struct s_display_info
 
 typedef struct s_info_segment
 {
-	short			dx;
-	short			dy;
-	short			eps;
-	short			eps_color[4];
+	int			dx;
+	int			dy;
+	int			eps;
+	int			eps_color[4];
 	unsigned char	d_color[4];
 	char			avanc_color[4];
 	t_bool			dy_is_sup_dx;

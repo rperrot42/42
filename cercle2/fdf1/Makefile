@@ -8,7 +8,7 @@ DIR_OBJS = .obj
 
 LIBFT_DIRECTORY = ./libft/
 
-FLAGS = -g3 -Wall -Werror -Wextra
+FLAGS =  -g3 -Wall -Werror -Wextra
 
 INClUDE = fdf.h
 
