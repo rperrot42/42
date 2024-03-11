@@ -19,13 +19,33 @@
 #include <math.h>
 #include "./../libft/libft.h"
 
+#define	KEYCODE_X 7
+#define KEYCODE_Z 6
+#define KEYCODE_M 46
+#define KEYCODE_N 45
+#define KEYCODE_W 13
+#define KEYCODE_A 0
+#define KEYCODE_S 1
+#define KEYCODE_D 2
+#define KEYCODE_I 34
+#define KEYCODE_K 40
+#define KEYCODE_L 37
+#define KEYCODE_J 38
 #define HEIGHT 600
 #define WIDTH 800
-
+#define ROTATION_MOVE 0.001
 #define BASE_10 "0123456789"
 #define BASE_HEXA "0123456789ABCDEF"
 #define ROTATION_X_START 0
 #define ROTATION_Y_START 0
+
+typedef enum	e_move
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+}	t_move;
 
 typedef struct	s_pixel
 {
@@ -36,9 +56,9 @@ typedef struct	s_pixel
 
 typedef struct	s_point_3d
 {
-	short			z;
-	short 			x;
-	short 			y;
+	int				z;
+	int 			x;
+	int 			y;
 	unsigned int	color;
 }	t_point_3d;
 
@@ -78,7 +98,7 @@ typedef struct s_display_info
 	float		distance_point;
 	short 		move_y;
 	short		move_x;
-	t_rotation	*rotation;
+	float		rotation_vector[3][3];
 }	t_display_info;
 
 typedef struct s_info_segment
@@ -91,20 +111,21 @@ typedef struct s_info_segment
 	char			avanc_color[4];
 	t_bool			dy_is_sup_dx;
 	char			avanc;
+	t_bool			black_color;
 }	t_info_segment;
 
-typedef struct	s_data {
+typedef struct	s_img {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}	t_data;
+}	t_img_info;
 
 typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
-	t_data	*data;
+	t_img_info	*img_info;
 }	t_vars;
 
 typedef struct	s_all_matrix
@@ -113,11 +134,26 @@ typedef struct	s_all_matrix
 	t_display_matrix	*display_matrix;
 }	t_all_matrix;
 
+typedef struct s_info_event
+{
+	t_bool	left_click;
+	t_bool	right_click;
+	short	position_x;
+	short	position_y;
+}	t_info_event;
+
+typedef struct s_all_info
+{
+	t_all_matrix	*all_matrix;
+	t_display_info	*display_info;
+	t_vars			*vars;
+	t_info_event	*info_event;
+}	t_all_info;
 
 
-void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
+void my_mlx_pixel_put(t_img_info *img, int x, int y, unsigned int color);
 
-void	create_line_all(t_data *img, t_point_3d a, t_point_3d b);
+void	create_line_all(t_img_info *img, t_point_3d a, t_point_3d b, t_bool	black_color);
 int		create_color(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
 void 	init_color_line(t_point_3d *a, t_point_3d *b, t_info_segment *info_segment);
 void	create_color_line(t_point_3d *a, t_info_segment *info_segment);
@@ -128,9 +164,17 @@ void	free_matrix_3d(t_matrix_3d *matrix_3d);
 t_bool	alloc_matrix_2d(t_all_matrix *all_matrix);
 void	free_display_matrix(t_display_matrix *display_matrix);
 void	transforme_matrix_3d_in2d(t_all_matrix *all_matrix, t_display_info *display_info);
-void	print_all_ligne(t_display_matrix *display_matrix, t_data *img);
+void	print_all_ligne(t_display_matrix *display_matrix, t_img_info *img, t_bool black_color);
 void	multiplication_matrix_3x3(float matrix_1[3][3], float matrix_2[3][3], float matrix_result[3][3]);
-void	create_rotation_matrix(t_rotation *rotation, float matrix_result[3][3]);
+void	create_identity_matrix(float matrix_result[3][3]);
 void	multiplication_matrix_3x1(float matrix_1[3][3], float matrix_2[3], float matrix_result[3]);
 t_display_info 	*create_display_info(int nb_point_width, int nb_point_height);
+int	keycode_move(int keycode, t_all_info *all_info);
+void	init_info_event(t_info_event *info_event);
+int	button_press(int keycode, int x, int y, t_info_event *info_event);
+int	button_release(int keycode, int x, int y, t_info_event *info_event);
+int	create_move(void f_move(t_display_info *display_info, t_move move), t_all_info *all_info, t_move move);
+int	motion_notify(int x, int y, t_all_info *all_info);
+void change_display_matrix(t_display_matrix *display_matrix, short x, short y);
+void	create_vector_multiplicator(float vector_multiplicator[3][3], int rotation_x, int rotation_y);
 #endif //FDF_FDF_H

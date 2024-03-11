@@ -12,21 +12,23 @@
 
 #include "./../include/fdf.h"
 
-void	print_all_ligne(t_display_matrix *display_matrix, t_data *img)
+void	print_all_ligne(t_display_matrix *display_matrix, t_img_info *img, t_bool black_color)
 {
 	int	i;
 	int j;
 
 	i = -1;
-	while (++i < display_matrix ->height)
+	while (++i < display_matrix -> height)
 	{
 		j = -1;
-		while (++j < display_matrix ->width)
+		while (++j < display_matrix -> width)
 		{
 			if (i)
-				create_line_all(img,display_matrix->display_pixel[i][j], display_matrix->display_pixel[i - 1][j]);
+				create_line_all(img, display_matrix->display_pixel[i][j], display_matrix->display_pixel[i - 1][j],
+								black_color);
 			if (j)
-				create_line_all(img,display_matrix->display_pixel[i][j - 1], display_matrix->display_pixel[i][j]);
+				create_line_all(img, display_matrix->display_pixel[i][j - 1], display_matrix->display_pixel[i][j],
+								black_color);
 		}
 	}
 }

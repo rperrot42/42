@@ -17,7 +17,7 @@ int create_color(unsigned char t, unsigned char r, unsigned char g, unsigned cha
 	return ((t << 24) + (r << 16) + (g << 8) + b);
 }
 
-void my_mlx_pixel_put(t_data *img, int x, int y, unsigned int color)
+void my_mlx_pixel_put(t_img_info *img, int x, int y, unsigned int color)
 {
 	char *dst;
 

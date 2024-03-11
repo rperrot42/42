@@ -15,16 +15,12 @@
 t_display_info 	*create_display_info(int nb_point_width, int nb_point_height)
 {
 	t_display_info *display_info;
-	float multiplier;
+	float			multiplier;
 
 	display_info = malloc(sizeof(t_display_info));
 	if (!display_info)
 		return (NULL);
-	display_info -> rotation = malloc(sizeof(t_rotation));
-	if (!display_info -> rotation)
-		return (free(display_info), NULL);
-	display_info -> rotation -> rotation_x = ROTATION_X_START;
-	display_info -> rotation -> rotation_y = ROTATION_Y_START;
+	create_identity_matrix(display_info->rotation_vector);
 	display_info -> distance_z_min = 1;
 	display_info -> move_x = 0;
 	display_info -> move_y = 0;
