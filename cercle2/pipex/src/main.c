@@ -15,7 +15,7 @@
 
 int main (int argc, char **argv, char **env)
 {
-	/*
+
 	errno = 0;
 	t_bool here_doc;
 
@@ -27,7 +27,6 @@ int main (int argc, char **argv, char **env)
 	else {
 		perror("Error: Insufficient arguments provided. Please provide the required arguments.");
 		return (1);
-	}*/
-	ft_printf("je t'aime de tout mon coeur, j'ai trop de chance de t'avoir !\n");
+	}
 	return (0);
 }
