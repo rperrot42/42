@@ -18,29 +18,30 @@ void	init_info_event(t_info_event *info_event)
 	info_event->right_click = FALSE;
 }
 
-int	button_press(int keycode, int x, int y, t_info_event *info_event)
+int	button_press(int keycode, int x, int y, t_all_info *all_info)
 {
-	ft_printf("%d keycode\n", keycode);
 	if (keycode == LEFT_CLICK)
 	{
-		info_event->left_click = TRUE;
-		info_event->position_x = x;
-		info_event->position_y = y;
+		all_info->info_event->left_click = TRUE;
+		all_info->info_event->position_x = x;
+		all_info->info_event->position_y = y;
 	}
 	else if (keycode == RIGHT_CLICK)
 	{
-		info_event->right_click = TRUE;
-		info_event->position_x = x;
-		info_event->position_y = y;
+		all_info->info_event->right_click = TRUE;
+		all_info->info_event->position_x = x;
+		all_info->info_event->position_y = y;
 	}
+	else if (keycode == SCROLING_UP)
+		return (create_move(change_value_min_z, all_info, UP));
+	else if (keycode == SCROLING_DOWN)
+		return (create_move(change_value_min_z, all_info, DOWN));
 	return (0);
-
 }
 
 
 int	button_release(int keycode, int x, int y, t_info_event *info_event)
 {
-	ft_printf("%d keycode\n", keycode);
 	if (keycode == LEFT_CLICK)
 	{
 		info_event->left_click = FALSE;
@@ -54,12 +55,10 @@ int	button_release(int keycode, int x, int y, t_info_event *info_event)
 		info_event->position_y = y;
 	}
 	return (0);
-
 }
 
 int	motion_notify(int x, int y, t_all_info *all_info)
 {
-	ft_printf("%d %d\n", x, y);
 	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)
 	{
 		all_info->info_event->left_click = FALSE;

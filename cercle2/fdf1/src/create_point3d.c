@@ -20,7 +20,12 @@ t_point_z	create_point3d(char **line)
 
 	while (**line == ' ')
 		*line = *line + 1;
-	point_3d.z = ft_atoi_base_avanc(line, BASE_10);
+	if (**line == '-') {
+		*line = *line + 1;
+		point_3d.z = ft_atoi_base_avanc(line, BASE_10) * -1;
+	}
+	else
+		point_3d.z = ft_atoi_base_avanc(line, BASE_10);
 	if (**line == ',')
 	{
 		*line = *line + 3;

@@ -42,7 +42,7 @@ test:
 ifeq ($(OS), Linux)
 	@echo $(OS)
 endif
-$(DIR_OBJS)/%.o: $(SRC_PATH)%.c | $(DIR_OBJS)
+$(DIR_OBJS)/%.o: $(SRC_PATH)%.c include/fdf.h| $(DIR_OBJS)
 ifeq ($(OS), Linux)
 	$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 else

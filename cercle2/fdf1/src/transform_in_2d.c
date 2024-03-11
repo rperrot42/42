@@ -39,19 +39,24 @@ static t_point_3d 	create_point_2d(t_point_z point_z, short x, short y, t_displa
 	t_point_3d	new_point_2d;
 
 
-
-	float a[3] = {x - 9, y - 5 ,point_z.z  * display_info ->multiplier_value_z + display_info->distance_z_min};
+	point_z.z = 0;
+	float a[3] = {x - display_info-> width / 2, y -  display_info-> height / 2 ,point_z.z};
 	float result[3];
 	multiplication_matrix_3x1(display_info->rotation_vector, a, result);
+	result[2] = result[2]  + display_info->distance_z_min  + result[2] * display_info ->multiplier_value_z;
 	x1 = result[0] * display_info -> distance_point;
 	y2 = result[1] * display_info -> distance_point;
-	//printf("%g\n",display_info->multiplier_value_z);
-	//printf("%g %g %g\n", result[0], result[1], result[2]);
-	new_point_2d.x = (x1 / (( result[2] ))) + WIDTH /2 - WIDTH*0.15 + display_info->move_x ;
-	new_point_2d.y =  (y2 / (( result[2]))) + HEIGHT/2 + HEIGHT*0.15 + display_info->move_y;
-	printf("x %g y %g\n", result[0], result[1]);
-	new_point_2d.color = point_z.z/10*0xFFFF + 0xFF0000;
-	//printf("%d %d \n", new_point_2d.x, new_point_2d.y);
+	if (result[2] <= 0.1)
+	{
+		new_point_2d.x = -1;
+		new_point_2d.y = -1;
+	}
+	else
+	{
+		new_point_2d.x = x1 / result[2] + WIDTH / 2 - WIDTH * 0.15 + display_info->move_x;
+		new_point_2d.y = y2 / result[2] + HEIGHT / 2 + HEIGHT * 0.15 + display_info->move_y;
+		new_point_2d.color = point_z.z / 10 * 0xFFFF + 0xFF0000;
+	}
 	return (new_point_2d);
 }
 

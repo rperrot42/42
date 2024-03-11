@@ -41,9 +41,11 @@
 #  define RIGHT_CLICK 3
 # endif
 # define LEFT_CLICK 1
-# define HEIGHT 600
-# define WIDTH 800
-# define ROTATION_MOVE 0.001
+# define HEIGHT 1500
+# define WIDTH 2000
+# define SCROLING_UP 5
+# define SCROLING_DOWN 4
+# define ROTATION_MOVE 0.005
 # define BASE_10 "0123456789"
 # define BASE_HEXA "0123456789ABCDEF"
 # define ROTATION_X_START 0
@@ -108,6 +110,9 @@ typedef struct s_display_info
 	short 		move_y;
 	short		move_x;
 	float		rotation_vector[3][3];
+	int			width;
+	int			height;
+	short		point_max;
 }	t_display_info;
 
 typedef struct s_info_segment
@@ -167,7 +172,7 @@ int		create_color(unsigned char t, unsigned char r, unsigned char g, unsigned ch
 void 	init_color_line(t_point_3d *a, t_point_3d *b, t_info_segment *info_segment);
 void	create_color_line(t_point_3d *a, t_info_segment *info_segment);
 int 	close_vars(t_vars *vars);
-t_matrix_3d 	*read_file_fdf(char *name_file);
+t_matrix_3d 	*read_file_fdf(char *name_file , short *point_3d_max);
 t_point_z	create_point3d(char **line);
 void	free_matrix_3d(t_matrix_3d *matrix_3d);
 t_bool	alloc_matrix_2d(t_all_matrix *all_matrix);
@@ -177,13 +182,14 @@ void	print_all_ligne(t_display_matrix *display_matrix, t_img_info *img, t_bool b
 void	multiplication_matrix_3x3(float matrix_1[3][3], float matrix_2[3][3], float matrix_result[3][3]);
 void	create_identity_matrix(float matrix_result[3][3]);
 void	multiplication_matrix_3x1(float matrix_1[3][3], float matrix_2[3], float matrix_result[3]);
-t_display_info 	*create_display_info(int nb_point_width, int nb_point_height);
+t_display_info 	*create_display_info(int nb_point_width, int nb_point_height, short point_max);
 int	keycode_move(int keycode, t_all_info *all_info);
 void	init_info_event(t_info_event *info_event);
-int	button_press(int keycode, int x, int y, t_info_event *info_event);
+int	button_press(int keycode, int x, int y, t_all_info *all_info);
 int	button_release(int keycode, int x, int y, t_info_event *info_event);
 int	create_move(void f_move(t_display_info *display_info, t_move move), t_all_info *all_info, t_move move);
 int	motion_notify(int x, int y, t_all_info *all_info);
 void change_display_matrix(t_display_matrix *display_matrix, short x, short y);
 void	create_vector_multiplicator(float vector_multiplicator[3][3], int rotation_x, int rotation_y);
-#endif //FDF_FDF_H
+void change_value_min_z(t_display_info *display_info, t_move move);
+#endif

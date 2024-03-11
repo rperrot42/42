@@ -12,8 +12,6 @@
 
 #include "./../include/fdf.h"
 
-static void change_value_min_z(t_display_info *display_info, t_move move);
-
 static void change_multiplier_z(t_display_info *display_info, t_move move);
 
 static void rotation(t_display_info *display_info, t_move move);
@@ -42,9 +40,6 @@ static void change_multiplier_z(t_display_info *display_info, t_move move)
 			display_info -> multiplier_value_z = display_info -> multiplier_value_z * 1.05 - 0.01;
 		else
 			display_info -> multiplier_value_z = display_info -> multiplier_value_z * 0.95 + 0.01;
-
-	printf("%g\n", display_info -> multiplier_value_z);
-
 }
 
 static void rotation(t_display_info *display_info, t_move move)
@@ -59,17 +54,16 @@ static void rotation(t_display_info *display_info, t_move move)
 		create_vector_multiplicator(display_info->rotation_vector, 0, -1);
 }
 
-static void change_value_min_z(t_display_info *display_info, t_move move)
+void change_value_min_z(t_display_info *display_info, t_move move)
 {
 	if (move == UP)
-		display_info ->distance_z_min += 0.01 + display_info ->distance_z_min * 0.02;
+		display_info ->distance_z_min += 0.03 + display_info ->distance_z_min * 0.06;
 	else
-		display_info ->distance_z_min -= 0.01 + display_info ->distance_z_min * 0.02;
+		display_info ->distance_z_min -= 0.03 + display_info ->distance_z_min * 0.06;
 }
 
 int	keycode_move(int keycode, t_all_info *all_info)
 {
-	ft_printf(" %d\n", keycode);
 	print_all_ligne(all_info->all_matrix->display_matrix, all_info->vars->img_info, TRUE);
 	if (keycode == KEYCODE_X)
 		return (create_move(change_multiplier_z, all_info, UP));
