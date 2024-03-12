@@ -48,6 +48,7 @@
 # define ROTATION_MOVE 0.005
 # define BASE_10 "0123456789"
 # define BASE_HEXA "0123456789ABCDEF"
+# define SPEED_ZOOM 0.03
 # define ROTATION_X_START 0
 # define ROTATION_Y_START 0
 typedef enum	e_move
@@ -113,6 +114,8 @@ typedef struct s_display_info
 	int			width;
 	int			height;
 	short		point_max;
+	float 		pov;
+	float 		result_pov;
 }	t_display_info;
 
 typedef struct s_info_segment

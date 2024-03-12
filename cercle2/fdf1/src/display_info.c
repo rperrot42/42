@@ -22,16 +22,19 @@ t_display_info 	*create_display_info(int nb_point_width, int nb_point_height, sh
 		return (NULL);
 	display_info -> point_max = point_max;
 	create_identity_matrix(display_info->rotation_vector);
+	create_vector_multiplicator(display_info->rotation_vector, 20, 15);
 	display_info -> width = nb_point_width;
 	display_info -> height = nb_point_height;
-	display_info -> distance_z_min = 1;
+	display_info -> distance_z_min = 10;
 	display_info -> move_x = 0;
 	display_info -> move_y = 0;
 	if (WIDTH / nb_point_width < HEIGHT / nb_point_height)
 		multiplier = (WIDTH / nb_point_width) * 0.7;
 	else
 		multiplier = (HEIGHT / nb_point_height) * 0.7;
-	display_info ->multiplier_value_z = multiplier;
+	display_info ->multiplier_value_z = - 1;
+	display_info -> pov = M_PI / 4;
+	display_info -> result_pov = 1.0 / tanf(display_info -> pov);
 	display_info ->distance_point = multiplier;
 	return (display_info);
 }

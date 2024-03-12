@@ -57,9 +57,10 @@ static void rotation(t_display_info *display_info, t_move move)
 void change_value_min_z(t_display_info *display_info, t_move move)
 {
 	if (move == UP)
-		display_info ->distance_z_min += 0.03 + display_info ->distance_z_min * 0.06;
+		display_info -> pov += SPEED_ZOOM;
 	else
-		display_info ->distance_z_min -= 0.03 + display_info ->distance_z_min * 0.06;
+		display_info -> pov -= SPEED_ZOOM;
+	display_info -> result_pov = tanf(display_info->pov);
 }
 
 int	keycode_move(int keycode, t_all_info *all_info)

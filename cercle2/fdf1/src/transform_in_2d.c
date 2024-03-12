@@ -6,7 +6,7 @@
 /*   By: rperrot <rperrot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:02:37 by rperrot           #+#    #+#             */
-/*   Updated: 2024/03/04 19:02:37 by rperrot          ###   ########.fr       */
+/*   Updated: 2024/03/12 19:46:52 by rperrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,19 @@ static t_point_3d 	create_point_2d(t_point_z point_z, short x, short y, t_displa
 	float result[3];
 	multiplication_matrix_3x1(display_info->rotation_vector, a, result);
 	result[2] = result[2]  + display_info->distance_z_min;
-	x1 = result[0] * display_info -> distance_point;
-	y2 = result[1] * display_info -> distance_point;
-	if (result[2] <= 0.1)
-	{
-		new_point_2d.x = -1;
-		new_point_2d.y = -1;
-	}
+	x1 = result[0] * display_info -> distance_point * display_info->result_pov;
+	y2 = result[1] * display_info -> distance_point * display_info->result_pov;
+	if (result[2] <= 0)
+		new_point_2d.z = -1;
 	else
 	{
+		new_point_2d.z = 0;
 		new_point_2d.x = x1 / result[2] + WIDTH / 2 - WIDTH * 0.15 + display_info->move_x;
 		new_point_2d.y = y2 / result[2] + HEIGHT / 2 + HEIGHT * 0.15 + display_info->move_y;
-		new_point_2d.color = point_z.z / 10 * 0xFFFF + 0xFF0000;
+		if (point_z.color)
+			new_point_2d.color = point_z.color;
+		else
+			new_point_2d.color = 0xFF0000 + 0xFFFF * point_z.z/ 10;
 	}
 	return (new_point_2d);
 }
