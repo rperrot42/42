@@ -93,7 +93,7 @@ static t_point_z *create_line_3d(char *line, int width, short *point_3d_max)
 	return (line_point);
 }
 
-static t_matrix_3d 	*create_matrix_point3d(t_list **lst_file, int height, short *point_3d_max);
+static t_matrix_3d 	*create_matrix_point3d(t_list **lst_file, int height, short *point_3d_max)
 {
 	t_matrix_3d		*matrix_3d;
 	int				width;

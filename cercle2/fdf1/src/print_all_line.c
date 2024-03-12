@@ -23,10 +23,10 @@ void	print_all_ligne(t_display_matrix *display_matrix, t_img_info *img, t_bool b
 		j = -1;
 		while (++j < display_matrix -> width)
 		{
-			if (i)
+			if (i && display_matrix->display_pixel[i][j].x != -1 && display_matrix->display_pixel[i - 1][j].x != -1)
 				create_line_all(img, display_matrix->display_pixel[i][j], display_matrix->display_pixel[i - 1][j],
 								black_color);
-			if (j)
+			if (j && display_matrix->display_pixel[i][j].x != -1 && display_matrix->display_pixel[i][j - 1].x != -1)
 				create_line_all(img, display_matrix->display_pixel[i][j - 1], display_matrix->display_pixel[i][j],
 								black_color);
 		}

@@ -37,13 +37,10 @@ static t_point_3d 	create_point_2d(t_point_z point_z, short x, short y, t_displa
 	float x1;
 	float y2;
 	t_point_3d	new_point_2d;
-
-
-	point_z.z = 0;
-	float a[3] = {x - display_info-> width / 2, y -  display_info-> height / 2 ,point_z.z};
+	float a[3] = {x - display_info-> width / 2, y -  display_info-> height / 2 , point_z.z* display_info ->multiplier_value_z};
 	float result[3];
 	multiplication_matrix_3x1(display_info->rotation_vector, a, result);
-	result[2] = result[2]  + display_info->distance_z_min  + result[2] * display_info ->multiplier_value_z;
+	result[2] = result[2]  + display_info->distance_z_min;
 	x1 = result[0] * display_info -> distance_point;
 	y2 = result[1] * display_info -> distance_point;
 	if (result[2] <= 0.1)
