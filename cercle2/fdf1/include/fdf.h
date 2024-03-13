@@ -41,8 +41,8 @@
 #  define RIGHT_CLICK 3
 # endif
 # define LEFT_CLICK 1
-# define HEIGHT 1500
-# define WIDTH 2000
+# define HEIGHT 600
+# define WIDTH 800
 # define SCROLING_UP 5
 # define SCROLING_DOWN 4
 # define ROTATION_MOVE 0.005

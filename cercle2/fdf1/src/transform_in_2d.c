@@ -43,6 +43,7 @@ static t_point_3d 	create_point_2d(t_point_z point_z, short x, short y, t_displa
 	result[2] = result[2]  + display_info->distance_z_min;
 	x1 = result[0] * display_info -> distance_point * display_info->result_pov;
 	y2 = result[1] * display_info -> distance_point * display_info->result_pov;
+	//printf("x1 %g %g %g %g\n", x1, result[0], display_info -> distance_point,  display_info->result_pov);
 	if (result[2] <= 0)
 		new_point_2d.z = -1;
 	else

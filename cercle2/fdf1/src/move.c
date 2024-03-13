@@ -30,6 +30,7 @@ int	create_move(void f_move(t_display_info *display_info, t_move move), t_all_in
 
 static void change_multiplier_z(t_display_info *display_info, t_move move)
 {
+
 	if (display_info -> multiplier_value_z > 0)
 		if (move == DOWN)
 			display_info -> multiplier_value_z = display_info -> multiplier_value_z * 0.95 - 0.01;
@@ -40,6 +41,7 @@ static void change_multiplier_z(t_display_info *display_info, t_move move)
 			display_info -> multiplier_value_z = display_info -> multiplier_value_z * 1.05 - 0.01;
 		else
 			display_info -> multiplier_value_z = display_info -> multiplier_value_z * 0.95 + 0.01;
+	printf("%g\n",display_info -> multiplier_value_z);
 }
 
 static void rotation(t_display_info *display_info, t_move move)
@@ -57,9 +59,10 @@ static void rotation(t_display_info *display_info, t_move move)
 void change_value_min_z(t_display_info *display_info, t_move move)
 {
 	if (move == UP)
-		display_info -> pov += SPEED_ZOOM;
-	else
 		display_info -> pov -= SPEED_ZOOM;
+	else
+		display_info -> pov *= ((M_PI / 2) - display_info -> pov) * 1.01;
+	printf("%g\n",display_info->pov);
 	display_info -> result_pov = tanf(display_info->pov);
 }
 
