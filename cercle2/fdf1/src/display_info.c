@@ -36,5 +36,8 @@ t_display_info 	*create_display_info(int nb_point_width, int nb_point_height, sh
 	display_info -> pov = M_PI / 2 - ( M_PI / (display_info -> distance_z_min)) ;
 	display_info -> result_pov =  tanf(display_info -> pov);
 	display_info ->distance_point = multiplier;
+	display_info -> color_negative =  0xFFcb00;
+	display_info -> color_null = 0x00627a;
+	display_info -> color_max = 0xFFFFFF;
 	return (display_info);
 }

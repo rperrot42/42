@@ -52,6 +52,7 @@
 # define SPEED_ZOOM 0.03
 # define ROTATION_X_START 0
 # define ROTATION_Y_START 0
+
 typedef enum	e_move
 {
 	UP,
@@ -117,6 +118,10 @@ typedef struct s_display_info
 	short		point_max;
 	float 		pov;
 	float 		result_pov;
+	unsigned int	color_negative;
+	unsigned int 	color_null;
+	unsigned int color_mid;
+	unsigned int color_max;
 }	t_display_info;
 
 typedef struct s_info_segment

@@ -51,9 +51,34 @@ static t_point_3d 	create_point_2d(t_point_z point_z, short x, short y, t_displa
 	if (point_z.color)
 		new_point_2d.color = point_z.color;
 	else
-		new_point_2d.color = 0xFF0000 + 0xFFFF * point_z.z/ 10;
-	//printf("%g\n", result[2]);
+		new_point_2d.color =0xFFFFFF;
+	if (point_z.z < 0)
+		new_point_2d.color = display_info -> color_negative;
+	else if (point_z.z == 0)
+		new_point_2d.color = display_info -> color_null;
+	else if (point_z.z >= 0 && point_z.z <= display_info->point_max / 2)
+		new_point_2d.color = display_info -> color_null ;
 	return (new_point_2d);
+}
+
+unsigned int create_color_point(short z, t_display_info *display_info)
+{
+	unsigned int color;
+	int			avanc;
+
+	if (z < 0)
+		color = display_info -> color_negative;
+	else if (z >= 0 && z <= display_info->point_max / 2)
+	{
+		avanc = (display_info->color_mid - display_info->color_null) / (display_info->point_max / 2);
+		color = display_info->color_null + avanc * z;
+	}
+	else
+	{
+		avanc = (display_info->color_max - display_info->color_mid) / (display_info->point_max / 2);
+		color = display_info->color_null + avanc * z;
+	}
+	return (color)
 }
 
 void change_display_matrix(t_display_matrix *display_matrix, short x, short y)
