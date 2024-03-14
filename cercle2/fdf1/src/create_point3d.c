@@ -17,13 +17,9 @@ static unsigned	int	ft_atoi_base_avanc(char **str, char *base);
 t_point_z	create_point3d(char **line)
 {
 	t_point_z	point_3d;
-	char *lin;
-	char *a;
 
-	a = *line;
 	while (**line == ' ')
 		*line = *line + 1;
-	lin = *line;
 	if (**line == '-') {
 		*line = *line + 1;
 		point_3d.z = ft_atoi_base_avanc(line, BASE_10) * -1;
@@ -31,11 +27,6 @@ t_point_z	create_point3d(char **line)
 	else
 		point_3d.z = ft_atoi_base_avanc(line, BASE_10);
 
-	if (point_3d.z > 100) {
-		ft_printf("a %s\n", a);
-		ft_printf("line %s \n", lin);
-		ft_printf("%d, %s\n", point_3d.z, *line - 20);
-	}
 	if (**line == ',')
 	{
 		*line = *line + 3;
@@ -61,7 +52,7 @@ static unsigned int	ft_atoi_base_avanc(char **str,  char *base)
 	while (is_in_base && **str)
 	{
 		i_base = 0;
-		while (i_base < length_base && **str != base[i_base])
+		while (i_base < length_base && **str != base[i_base] && **str != base[i_base] - 32)
 			i_base++;
 		if (i_base == length_base)
 			is_in_base = 0;
