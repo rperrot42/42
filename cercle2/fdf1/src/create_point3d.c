@@ -17,15 +17,25 @@ static unsigned	int	ft_atoi_base_avanc(char **str, char *base);
 t_point_z	create_point3d(char **line)
 {
 	t_point_z	point_3d;
+	char *lin;
+	char *a;
 
+	a = *line;
 	while (**line == ' ')
 		*line = *line + 1;
+	lin = *line;
 	if (**line == '-') {
 		*line = *line + 1;
 		point_3d.z = ft_atoi_base_avanc(line, BASE_10) * -1;
 	}
 	else
 		point_3d.z = ft_atoi_base_avanc(line, BASE_10);
+
+	if (point_3d.z > 100) {
+		ft_printf("a %s\n", a);
+		ft_printf("line %s \n", lin);
+		ft_printf("%d, %s\n", point_3d.z, *line - 20);
+	}
 	if (**line == ',')
 	{
 		*line = *line + 3;

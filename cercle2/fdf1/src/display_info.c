@@ -25,7 +25,7 @@ t_display_info 	*create_display_info(int nb_point_width, int nb_point_height, sh
 	create_vector_multiplicator(display_info->rotation_vector, 20, 15);
 	display_info -> width = nb_point_width;
 	display_info -> height = nb_point_height;
-	display_info -> distance_z_min = 100;
+	display_info -> distance_z_min = point_max * 10;
 	display_info -> move_x = 0;
 	display_info -> move_y = 0;
 	if (WIDTH / nb_point_width < HEIGHT / nb_point_height)
@@ -33,8 +33,9 @@ t_display_info 	*create_display_info(int nb_point_width, int nb_point_height, sh
 	else
 		multiplier = (HEIGHT / nb_point_height) * 0.7;
 	display_info ->multiplier_value_z = - 1;
-	display_info -> pov = M_PI / 4;
-	display_info -> result_pov = 1.0 / tanf(display_info -> pov);
+	display_info -> pov = M_PI / 2 - ( M_PI / (display_info -> distance_z_min)) ;
+	display_info -> result_pov =  tanf(display_info -> pov);
+	printf("%g\n", display_info -> result_pov);
 	display_info ->distance_point = multiplier;
 	return (display_info);
 }
