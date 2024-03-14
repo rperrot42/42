@@ -44,8 +44,8 @@ void 	init_color_line(t_point_3d *a, t_point_3d *b, t_info_segment *info_segment
 			info_segment->avanc_color[i] = -1;
 			info_segment->d_color[i] =  ((a->color) >> (8 * i) & 255) - ((b->color) >> (8 * i) & 255);
 		}
-		//ft_printf("%d %d %p %p\n", info_segment->avanc_color[i], info_segment->d_color[i], a->color, b->color);
 	}
+	info_segment -> avanc_z = (b->z - a->z) / info_segment ->dx;
 }
 
 void	create_color_line(t_point_3d *a, t_info_segment *info_segment)
