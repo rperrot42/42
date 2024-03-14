@@ -48,29 +48,37 @@ static void	create_line(t_img_info *img, t_point_3d *a, t_point_3d *b, t_info_se
 	//printf("%g %g %g %g %g %g %g\n",a->z, b->z, a->x/29.4, b->x/29.4, a->y/29.4, b->y/29.4, inf_seg->avanc_z);
 	while (++a->x <= b->x)
 	{
-		//printf("%g \n",a->z);
 		inf_seg->eps += inf_seg->dy * inf_seg->avanc;
 		if (inf_seg->dy_is_sup_dx == TRUE)
 		{
-			if (a->y >= 0 && a->y < WIDTH && a->x >= 0 && a->x < HEIGHT )
-			{
+			if (a->y >= 0 && a->y < WIDTH && a->x >= 0 && a->x < HEIGHT ) {
 				//ft_printf("%ddedede\n");
-				if (inf_seg->black_color == FALSE && a->z > img->distance_pixel[a->x][a->y])
-					img->distance_pixel[a->x][a->y] = a->z * -1;
-				else if (inf_seg->black_color == TRUE)
+				if (inf_seg->black_color == FALSE && a->z < img->distance_pixel[a->x][a->y])
+				{
+					//if (img->distance_pixel[a->x][a->y] < 1000)
+					//	printf("%g %g\n",  img->distance_pixel[a->y][a->x], a->z);
+			 		img->distance_pixel[a->x][a->y] = a->z;
+					my_mlx_pixel_put(img, a->y, a->x, a->color);
+				}
+				else if (inf_seg->black_color == TRUE) {
 					img->distance_pixel[a->x][a->y] = FLT_MAX;
-				my_mlx_pixel_put(img, a->y, a->x, a->color);
+					my_mlx_pixel_put(img, a->y, a->x, a->color);
+				}
 			}
 		}
 		else if (a->x >= 0 && a->x < WIDTH && a->y >= 0 && a->y < HEIGHT)
 		{
-			//ft_printf("%ddedede\n");
-			if (inf_seg->black_color == FALSE && a->z > img->distance_pixel[a->y][a->x])
-				img->distance_pixel[a->y][a->x] = a->z * -1;
-			else if (inf_seg->black_color == TRUE)
+			if (inf_seg->black_color == FALSE && a->z < img->distance_pixel[a->y][a->x]) {
+				my_mlx_pixel_put(img, a->x, a->y, a->color);
+				//if (img->distance_pixel[a->y][a->x] < 1000)
+					//printf("%g %g\n",  img->distance_pixel[a->y][a->x], a->z);
+				img->distance_pixel[a->y][a->x] = a->z ;
+			}
+			else if (inf_seg->black_color == TRUE) {
 				img->distance_pixel[a->y][a->x] = FLT_MAX;
+				my_mlx_pixel_put(img, a->x, a->y, a->color);
+			}
 
-			my_mlx_pixel_put(img, a->x, a->y, a->color);
 		}
 		if (inf_seg->eps * 2 > inf_seg->dx)
 		{

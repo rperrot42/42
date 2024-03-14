@@ -35,7 +35,6 @@ t_display_info 	*create_display_info(int nb_point_width, int nb_point_height, sh
 	display_info ->multiplier_value_z = - 1;
 	display_info -> pov = M_PI / 2 - ( M_PI / (display_info -> distance_z_min)) ;
 	display_info -> result_pov =  tanf(display_info -> pov);
-	printf("%g\n", display_info -> result_pov);
 	display_info ->distance_point = multiplier;
 	return (display_info);
 }

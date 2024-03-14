@@ -27,6 +27,7 @@ float	**init_distance_pixel(void)
 		if (!distance_pixel[i])
 			return (free_distance_pixel(distance_pixel, i), NULL);
 	}
+	put_distance_pixel_float_max(distance_pixel);
 	return (distance_pixel);
 }
 

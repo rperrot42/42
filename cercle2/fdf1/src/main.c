@@ -45,7 +45,6 @@ int	main(int argc, char **argv)
 		display_info = create_display_info(a.display_matrix->width, a.display_matrix->height, point_max);
 		transforme_matrix_3d_in2d(&a, display_info);
 
-
 		vars.mlx = mlx_init();
 		vars.img_info = &img_info;
 		img_info.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
