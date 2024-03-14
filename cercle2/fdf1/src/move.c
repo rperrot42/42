@@ -41,7 +41,6 @@ static void change_multiplier_z(t_display_info *display_info, t_move move)
 			display_info -> multiplier_value_z = display_info -> multiplier_value_z * 1.05 - 0.01;
 		else
 			display_info -> multiplier_value_z = display_info -> multiplier_value_z * 0.95 + 0.01;
-	printf("%g\n",display_info -> multiplier_value_z);
 }
 
 static void rotation(t_display_info *display_info, t_move move)
@@ -70,7 +69,6 @@ void change_value_min_z(t_display_info *display_info, t_move move)
 			display_info->pov += display_info->pov * 0.1;
 
 	}
-	printf("%g\n",display_info->pov);
 	display_info -> result_pov = tanf(display_info->pov);
 }
 

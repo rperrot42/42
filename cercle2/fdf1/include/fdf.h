@@ -18,6 +18,7 @@
 # include <string.h>
 # include <mlx.h>
 # include <math.h>
+# include <float.h>
 
 # ifdef __APPLE__
 #  define KEYCODE_I 34
@@ -68,7 +69,7 @@ typedef struct	s_pixel
 
 typedef struct	s_point_3d
 {
-	int				z;
+	float				z;
 	int 			x;
 	int 			y;
 	unsigned int	color;
@@ -131,9 +132,10 @@ typedef struct s_info_segment
 	t_bool			black_color;
 }	t_info_segment;
 
-typedef struct	s_img {
+typedef struct	s_img_info {
 	void	*img;
 	char	*addr;
+	float	**distance_pixel;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -195,4 +197,7 @@ int	motion_notify(int x, int y, t_all_info *all_info);
 void change_display_matrix(t_display_matrix *display_matrix, short x, short y);
 void	create_vector_multiplicator(float vector_multiplicator[3][3], int rotation_x, int rotation_y);
 void change_value_min_z(t_display_info *display_info, t_move move);
+void	free_distance_pixel(float **distance_pixel, int size);
+void	put_distance_pixel_float_max(float **distance_pixel);
+float	**init_distance_pixel(void);
 #endif

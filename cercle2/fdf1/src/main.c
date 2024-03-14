@@ -51,6 +51,7 @@ int	main(int argc, char **argv)
 		img_info.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
 		img_info.addr = mlx_get_data_addr(img_info.img, &img_info.bits_per_pixel, &img_info.line_length,
 										  &img_info.endian);
+		img_info.distance_pixel = init_distance_pixel();
 		vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "Hello world!");
 		print_all_ligne(a.display_matrix, &img_info, FALSE);
 		all_info.display_info = display_info;

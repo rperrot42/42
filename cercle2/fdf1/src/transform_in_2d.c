@@ -43,20 +43,16 @@ static t_point_3d 	create_point_2d(t_point_z point_z, short x, short y, t_displa
 	result[2] = result[2]  + display_info->distance_z_min;
 	x1 = result[0] * display_info -> distance_point * display_info->result_pov;
 	y2 = result[1] * display_info -> distance_point * display_info->result_pov;
-	//printf("%g\n",display_info->result_pov);
-	//printf("x1 %g %g %g %g\n", x1, result[0], display_info -> distance_point,  display_info->result_pov);
-	if (result[2] <= 0)
-		new_point_2d.z = -1;
+
+
+	new_point_2d.z = result[2];
+	new_point_2d.x = x1 / result[2] + WIDTH / 2 - WIDTH * 0.15 + display_info->move_x;
+	new_point_2d.y = y2 / result[2] + HEIGHT / 2 + HEIGHT * 0.15 + display_info->move_y;
+	if (point_z.color)
+		new_point_2d.color = point_z.color;
 	else
-	{
-		new_point_2d.z = 0;
-		new_point_2d.x = x1 / result[2] + WIDTH / 2 - WIDTH * 0.15 + display_info->move_x;
-		new_point_2d.y = y2 / result[2] + HEIGHT / 2 + HEIGHT * 0.15 + display_info->move_y;
-		if (point_z.color)
-			new_point_2d.color = point_z.color;
-		else
-			new_point_2d.color = 0xFF0000 + 0xFFFF * point_z.z/ 10;
-	}
+		new_point_2d.color = 0xFF0000 + 0xFFFF * point_z.z/ 10;
+	//printf("%g\n", result[2]);
 	return (new_point_2d);
 }
 

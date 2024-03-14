@@ -50,11 +50,17 @@ static void	create_line(t_img_info *img, t_point_3d *a, t_point_3d *b, t_info_se
 		inf_seg->eps += inf_seg->dy * inf_seg->avanc;
 		if (inf_seg->dy_is_sup_dx == TRUE)
 		{
-			if (a->y >= 0 && a->y <= WIDTH && a->x >= 0 && a->x <= HEIGHT)
+			if (a->y >= 0 && a->y <= WIDTH && a->x >= 0 && a->x <= HEIGHT && a->z < img->distance_pixel[a->y][a->x])
+			{
+				img->distance_pixel[a->y][a->x] = a->z;
 				my_mlx_pixel_put(img, a->y, a->x, a->color);
+			}
 		}
-		else if (a->x >= 0 && a->x <= WIDTH && a->y >= 0 && a->y <= HEIGHT)
-				my_mlx_pixel_put(img, a->x, a->y, a->color);
+		else if (a->x >= 0 && a->x <= WIDTH && a->y >= 0 && a->y <= HEIGHT && a->z < img->distance_pixel[a->x][a->y])
+		{
+			img->distance_pixel[a->x][a->y] = a->z;
+			my_mlx_pixel_put(img, a->x, a->y, a->color);
+		}
 		if (inf_seg->eps * 2 > inf_seg->dx)
 		{
 			inf_seg->eps -= inf_seg->dx;

@@ -18,6 +18,8 @@ void	print_all_ligne(t_display_matrix *display_matrix, t_img_info *img, t_bool b
 	int j;
 
 	i = -1;
+	if (black_color == TRUE)
+		put_distance_pixel_float_max(img ->distance_pixel);
 	while (++i < display_matrix -> height)
 	{
 		j = -1;
