@@ -66,4 +66,5 @@ void	create_color_line(t_point_3d *a, t_info_segment *info_segment)
 			info_segment->eps_color[i] -= (info_segment->eps_color[i] * 2 > info_segment->dx) * info_segment->dx;
 		}
 	}
+	a->z += info_segment->avanc_z;
 }

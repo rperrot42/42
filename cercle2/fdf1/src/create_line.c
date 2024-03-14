@@ -35,6 +35,7 @@ void	create_line_all(t_img_info *img, t_point_3d a, t_point_3d b, t_bool	black_c
 		info_segment.dy = a.y - b.y;
 		info_segment.dx = a.x - b.x;
 		info_segment.avanc = (info_segment.dy >= 0) - (info_segment.dy < 0);
+		info_segment.avanc_z = (a.z - b.z) / info_segment.dx;
 		if (black_color == FALSE)
 			init_color_line(&b, &a, &info_segment);
 		if (info_segment.dx != 0)
@@ -45,20 +46,30 @@ void	create_line_all(t_img_info *img, t_point_3d a, t_point_3d b, t_bool	black_c
 static void	create_line(t_img_info *img, t_point_3d *a, t_point_3d *b, t_info_segment *inf_seg)
 {
 	a->x = a->x - 1;
+	//printf("%g %g %d %d %d %d %g\n",a->z, b->z, a->x, b->x, a->y, b->y, inf_seg->avanc_z);
 	while (++a->x <= b->x)
 	{
 		inf_seg->eps += inf_seg->dy * inf_seg->avanc;
 		if (inf_seg->dy_is_sup_dx == TRUE)
 		{
-			if (a->y >= 0 && a->y <= WIDTH && a->x >= 0 && a->x <= HEIGHT && a->z < img->distance_pixel[a->y][a->x])
+			if (a->y >= 0 && a->y < WIDTH && a->x >= 0 && a->x < HEIGHT )
 			{
-				img->distance_pixel[a->y][a->x] = a->z;
+				//ft_printf("%ddedede\n");
+				if (inf_seg->black_color == FALSE && a->z > img->distance_pixel[a->x][a->y])
+					img->distance_pixel[a->x][a->y] = a->z * -1;
+				else if (inf_seg->black_color == TRUE)
+					img->distance_pixel[a->x][a->y] = FLT_MAX;
 				my_mlx_pixel_put(img, a->y, a->x, a->color);
 			}
 		}
-		else if (a->x >= 0 && a->x <= WIDTH && a->y >= 0 && a->y <= HEIGHT && a->z < img->distance_pixel[a->x][a->y])
+		else if (a->x >= 0 && a->x < WIDTH && a->y >= 0 && a->y < HEIGHT)
 		{
-			img->distance_pixel[a->x][a->y] = a->z;
+			//ft_printf("%ddedede\n");
+			if (inf_seg->black_color == FALSE && a->z > img->distance_pixel[a->y][a->x])
+				img->distance_pixel[a->y][a->x] = a->z * -1;
+			else if (inf_seg->black_color == TRUE)
+				img->distance_pixel[a->y][a->x] = FLT_MAX;
+
 			my_mlx_pixel_put(img, a->x, a->y, a->color);
 		}
 		if (inf_seg->eps * 2 > inf_seg->dx)
@@ -98,6 +109,7 @@ static void init_info_segment(t_point_3d *a, t_point_3d *b, t_info_segment *info
 	info_segment -> eps = 0;
 	info_segment->dy = b->y - a->y;
 	info_segment->dx = b->x - a->x;
+	info_segment->avanc_z = (b->z - a->z) / info_segment->dx;
 	info_segment->dy_is_sup_dx = FALSE;
 	info_segment->avanc = (info_segment->dy >= 0) - (info_segment->dy < 0);
 	if (info_segment->dx * ((info_segment->dx >= 0) - (info_segment->dx < 0)) < info_segment->dy * info_segment->avanc)

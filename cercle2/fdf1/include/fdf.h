@@ -121,15 +121,16 @@ typedef struct s_display_info
 
 typedef struct s_info_segment
 {
-	int			dx;
-	int			dy;
-	int			eps;
-	int			eps_color[4];
+	int				dx;
+	int				dy;
+	int				eps;
+	int				eps_color[4];
 	unsigned char	d_color[4];
 	char			avanc_color[4];
 	t_bool			dy_is_sup_dx;
 	char			avanc;
 	t_bool			black_color;
+	float 			avanc_z;
 }	t_info_segment;
 
 typedef struct	s_img_info {
