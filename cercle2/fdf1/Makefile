@@ -25,7 +25,8 @@ SRC = create_color.c \
 	display_info.c \
 	move.c \
 	info_event.c \
-	init_distance_pixel.c
+	init_distance_pixel.c \
+	projection.c
 
 SRC_PATH = src/
 

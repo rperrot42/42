@@ -38,21 +38,12 @@ void	transforme_matrix_3d_in2d(t_all_matrix *all_matrix, t_display_info *display
 
 static t_point_3d 	create_point_2d(t_point_z point_z, short x, short y, t_display_info *display_info)
 {
-	float x1;
-	float y2;
 	t_point_3d	new_point_2d;
 	float a[3] = {x - display_info-> width / 2, y - display_info-> height / 2 , point_z.z* display_info ->multiplier_value_z};
 	float result[3];
+
 	multiplication_matrix_3x1(display_info->rotation_vector, a, result);
-	result[2] = result[2]  + display_info->distance_z_min;
-	x1 = result[0] * display_info -> distance_point * display_info->result_pov;
-	y2 = result[1] * display_info -> distance_point * display_info->result_pov;
-	if (result[2] <= 1)
-		result[2] = 1;
-	new_point_2d.z = result[2];
-	new_point_2d.x = x1 / result[2] + WIDTH / 2 + display_info->move_x;
-	new_point_2d.y = y2 / result[2] + HEIGHT / 2  + display_info->move_y;
-	new_point_2d.color = create_color_point(point_z.z, display_info, display_info->actual_color);
+	new_point_2d = perspective_projection(result, display_info);
 	if (point_z.color)
 		new_point_2d.color = point_z.color;
 	else

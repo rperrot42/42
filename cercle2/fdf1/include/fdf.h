@@ -219,4 +219,5 @@ void	free_distance_pixel(float **distance_pixel, int size);
 void	put_distance_pixel_float_max(float **distance_pixel);
 float	**init_distance_pixel(void);
 void	renitialise_display_info(t_display_info *display_info);
+t_point_3d	perspective_projection(float coordinates_point[3], t_display_info *display_info);
 #endif
