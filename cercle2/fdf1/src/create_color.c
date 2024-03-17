@@ -30,6 +30,9 @@ void 	init_color_line(t_point_3d *a, t_point_3d *b, t_info_segment *info_segment
 	int	i;
 
 	i = -1;
+	info_segment->is_draw = TRUE;
+	if (b->color == a->color)
+		info_segment->is_draw = FALSE;
 	while (++i < 4)
 	{
 		info_segment->eps_color[i] = 0;
@@ -61,7 +64,6 @@ void	create_color_line(t_point_3d *a, t_info_segment *info_segment)
 			info_segment->eps_color[i] += info_segment->d_color[i];
 			if (info_segment->eps_color[i] * 2 > info_segment->dx)
 			{
-
 				a->color += (info_segment->eps_color[i] / info_segment->dx * info_segment->avanc_color[i]) << (8 * i);
 				info_segment->eps_color[i] -= info_segment->eps_color[i] / info_segment->dx * info_segment->dx;
 				a->color += ((info_segment->eps_color[i] * 2 > info_segment->dx) * info_segment->avanc_color[i]

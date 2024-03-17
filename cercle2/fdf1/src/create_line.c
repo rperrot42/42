@@ -21,7 +21,6 @@ static void create_line(t_img_info *img, t_point_3d *a, t_point_3d *b, t_info_se
 void	create_line_all(t_img_info *img, t_point_3d a, t_point_3d b, t_bool	black_color)
 {
 	t_info_segment info_segment;
-
 	info_segment.black_color = black_color;
 	init_info_segment(&a, &b, &info_segment);
 	if (info_segment.dx > 0)
@@ -45,14 +44,14 @@ void	create_line_all(t_img_info *img, t_point_3d a, t_point_3d b, t_bool	black_c
 static void	create_line(t_img_info *img, t_point_3d *a, t_point_3d *b, t_info_segment *inf_seg)
 {
 	a->x = a->x - 1;
-	//printf("%g %g %g %g %g %g %g\n",a->z, b->z, a->x/29.4, b->x/29.4, a->y/29.4, b->y/29.4, inf_seg->avanc_z);
 	while (++a->x <= b->x)
 	{
 		inf_seg->eps += inf_seg->dy * inf_seg->avanc;
 		if (inf_seg->dy_is_sup_dx == TRUE)
 		{
 			if (a->y >= 0 && a->y < WIDTH && a->x >= 0 && a->x < HEIGHT ) {
-				//ft_printf("%ddedede\n");
+
+
 				if (inf_seg->black_color == FALSE && a->z < img->distance_pixel[a->x][a->y])
 				{
 					//if (img->distance_pixel[a->x][a->y] < 1000)
@@ -85,7 +84,7 @@ static void	create_line(t_img_info *img, t_point_3d *a, t_point_3d *b, t_info_se
 			inf_seg->eps -= inf_seg->dx;
 			a->y += inf_seg->avanc;
 		}
-		if (inf_seg->black_color == FALSE)
+		if (inf_seg->black_color == FALSE && inf_seg ->is_draw == TRUE)
 			create_color_line(a, inf_seg);
 	}
 }

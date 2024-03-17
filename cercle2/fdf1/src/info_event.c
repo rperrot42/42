@@ -33,9 +33,9 @@ int	button_press(int keycode, int x, int y, t_all_info *all_info)
 		all_info->info_event->position_y = y;
 	}
 	else if (keycode == SCROLING_UP)
-		return (create_move(change_value_min_z, all_info, UP));
+		return (change_value_min_z(all_info->display_info, UP));
 	else if (keycode == SCROLING_DOWN)
-		return (create_move(change_value_min_z, all_info, DOWN));
+		return (change_value_min_z(all_info->display_info, DOWN));
 	return (0);
 }
 
@@ -66,24 +66,18 @@ int	motion_notify(int x, int y, t_all_info *all_info)
 	}
 	if (all_info->info_event->left_click == TRUE)
 	{
-		print_all_ligne(all_info->all_matrix->display_matrix, all_info->vars->img_info, TRUE);
-		change_display_matrix(all_info->all_matrix->display_matrix, x - all_info->info_event->position_x, y - all_info->info_event->position_y);
-		print_all_ligne(all_info->all_matrix->display_matrix, all_info->vars->img_info, FALSE);
 		all_info->display_info->move_x += x - all_info->info_event->position_x;
 		all_info->display_info->move_y += y - all_info->info_event->position_y;
 		all_info->info_event->position_x = x;
 		all_info->info_event->position_y = y;
-		return  (mlx_put_image_to_window(all_info->vars->mlx, all_info->vars->win, all_info->vars->img_info->img, 0, 0));
+		return  (0);
 	}
 	if (all_info->info_event->right_click == TRUE)
 	{
-		print_all_ligne(all_info->all_matrix->display_matrix, all_info->vars->img_info, TRUE);
 		create_vector_multiplicator(all_info->display_info->rotation_vector, y - all_info->info_event->position_y, all_info->info_event->position_x - x);
-		transforme_matrix_3d_in2d(all_info->all_matrix, all_info->display_info);
 		all_info->info_event->position_x = x;
 		all_info->info_event->position_y = y;
-		print_all_ligne(all_info->all_matrix->display_matrix, all_info->vars->img_info, FALSE);
-		return  (mlx_put_image_to_window(all_info->vars->mlx, all_info->vars->win, all_info->vars->img_info->img, 0, 0));
+		return  (0);
 	}
 	return (0);
 }

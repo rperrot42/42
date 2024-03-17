@@ -20,12 +20,6 @@ int close_vars(t_vars *vars)
 	return (0);
 }
 
-int presse_mouse(int keycode, int x, int y, void *vars)
-{
-	ft_printf("%d %d %d\n", x, y, keycode, vars);
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
 	t_vars			vars;
@@ -35,14 +29,15 @@ int	main(int argc, char **argv)
 	t_all_info all_info;
 	t_info_event info_event;
 	short point_max;
+	short point_min;
 
 	if (argc == 2)
 	{
 		init_info_event(&info_event);
-		a.matrix_3_d = read_file_fdf(argv[1], &point_max);
+		a.matrix_3_d = read_file_fdf(argv[1], &point_max, &point_min);
 		alloc_matrix_2d(&a);
 
-		display_info = create_display_info(a.display_matrix->width, a.display_matrix->height, point_max);
+		display_info = create_display_info(a.display_matrix->width, a.display_matrix->height, point_max, point_min);
 		transforme_matrix_3d_in2d(&a, display_info);
 
 		vars.mlx = mlx_init();
@@ -52,17 +47,17 @@ int	main(int argc, char **argv)
 										  &img_info.endian);
 		img_info.distance_pixel = init_distance_pixel();
 		vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "Hello world!");
-		print_all_ligne(a.display_matrix, &img_info, FALSE);
 		all_info.display_info = display_info;
 		all_info.all_matrix = &a;
 		all_info.vars = &vars;
 		all_info.info_event = &info_event;
-		mlx_hook(vars.win, 4, (1L<<2)		, button_press, &all_info);
-		mlx_hook(vars.win, 5, (1L<<3)		, button_release, &info_event);
-		mlx_hook(vars.win, 6, (1L<<6)	, motion_notify, &all_info);
+		display_all(&all_info);
+		mlx_hook(vars.win, 4, (1L<<2), button_press, &all_info);
+		mlx_hook(vars.win, 5, (1L<<3), button_release, &info_event);
+		mlx_hook(vars.win, 6, (1L<<6), motion_notify, &all_info);
 		mlx_hook(vars.win, 17, 1L << 0, close_vars, &vars);
-		mlx_hook(vars.win, 2, 1L << 0, keycode_move, &all_info);
-		mlx_put_image_to_window(vars.mlx, vars.win, img_info.img, 0, 0);
+		mlx_hook(vars.win, 2, 1L << 0, keycode_move, display_info);
+		mlx_loop_hook(vars.mlx, display_all, &all_info);
 		mlx_loop(vars.mlx);
 	}
 	return 0;
