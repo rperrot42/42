@@ -12,10 +12,19 @@
 
 #include "./../include/fdf.h"
 
-void	init_info_event(t_info_event *info_event)
+t_info_event *	init_info_event(void)
 {
+	t_info_event *info_event;
+
+	info_event = malloc(sizeof (t_info_event));
+	if (!info_event)
+		return (NULL);
 	info_event->left_click = FALSE;
 	info_event->right_click = FALSE;
+	info_event->left_click = 0;
+	info_event ->right_click = 0;
+
+	return (info_event);
 }
 
 int	button_press(int keycode, int x, int y, t_all_info *all_info)

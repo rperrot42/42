@@ -43,7 +43,10 @@ static t_point_3d 	create_point_2d(t_point_z point_z, short x, short y, t_displa
 	float result[3];
 
 	multiplication_matrix_3x1(display_info->rotation_vector, a, result);
-	new_point_2d = perspective_projection(result, display_info);
+	if (display_info -> projection_type == PERSPECTIVE)
+		new_point_2d = perspective_projection(result, display_info);
+	else
+		new_point_2d = stereographic_projection(result, display_info);
 	if (point_z.color)
 		new_point_2d.color = point_z.color;
 	else

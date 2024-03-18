@@ -42,8 +42,10 @@
 #  define KEYCODE_SP 32
 #  define KEYCODE_J 106
 #  define KEYCODE_P 112
+#  define KEYCODE_R 114
 #  define RIGHT_CLICK 3
 #  define KEYCODE_C 99
+#  define KEYCODE_ESC 65307
 # endif
 # define LEFT_CLICK 1
 # define HEIGHT 600
@@ -57,7 +59,7 @@
 # define ROTATION_X_START -100
 # define ROTATION_Y_START -50
 # define COLOR_MAX 2
-
+# define FILE_EXTENSION_FDF ".fdf"
 
 typedef enum	e_move
 {
@@ -66,6 +68,12 @@ typedef enum	e_move
 	LEFT,
 	RIGHT
 }	t_move;
+
+typedef enum	e_projection
+{
+	STEREOGRAPHIC,
+	PERSPECTIVE
+}	t_projection;
 
 typedef struct	s_pixel
 {
@@ -125,12 +133,14 @@ typedef struct s_display_info
 	short			point_min;
 	float			pov;
 	float			result_pov;
+	t_projection	projection_type;
 	unsigned int	color_negative[2];
 	unsigned int	color_null[2];
 	unsigned int	color_mid[2];
 	unsigned int	color_max[2];
 	char 			actual_color;
 	t_bool			print_point;
+	short 			height_max;
 }	t_display_info;
 
 typedef struct s_info_segment
@@ -160,8 +170,8 @@ typedef struct	s_img_info
 
 typedef struct	s_vars
 {
-	void	*mlx;
-	void	*win;
+	void		*mlx;
+	void		*win;
 	t_img_info	*img_info;
 }	t_vars;
 
@@ -175,8 +185,8 @@ typedef struct s_info_event
 {
 	t_bool	left_click;
 	t_bool	right_click;
-	short	position_x;
-	short	position_y;
+	int 	position_x;
+	int 	position_y;
 }	t_info_event;
 
 typedef struct s_all_info
@@ -194,10 +204,10 @@ void	create_line_all(t_img_info *img, t_point_3d a, t_point_3d b, t_bool	black_c
 int		create_color(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
 void 	init_color_line(t_point_3d *a, t_point_3d *b, t_info_segment *info_segment);
 void	create_color_line(t_point_3d *a, t_info_segment *info_segment);
-int 	close_vars(t_vars *vars);
+int close_vars(t_all_info *all_info);
 t_matrix_3d 	*read_file_fdf(char *name_file , short *point_3d_max, short *point_3d_min);
 t_point_z	create_point3d(char **line);
-void	free_matrix_3d(t_matrix_3d *matrix_3d);
+void	free_matrix_3d(t_matrix_3d *matrix_3d, int height);
 t_bool	alloc_matrix_2d(t_all_matrix *all_matrix);
 void	free_display_matrix(t_display_matrix *display_matrix);
 void	transforme_matrix_3d_in2d(t_all_matrix *all_matrix, t_display_info *display_info);
@@ -206,8 +216,8 @@ void	multiplication_matrix_3x3(float matrix_1[3][3], float matrix_2[3][3], float
 void	create_identity_matrix(float matrix_result[3][3]);
 void	multiplication_matrix_3x1(float matrix_1[3][3], float matrix_2[3], float matrix_result[3]);
 t_display_info 	*create_display_info(int nb_point_width, int nb_point_height, short point_max, short point_min);
-int	keycode_move(int keycode, t_display_info *display_info);
-void	init_info_event(t_info_event *info_event);
+int	keycode_move(int keycode, t_all_info *all_info);
+t_info_event *	init_info_event(void);
 int	button_press(int keycode, int x, int y, t_all_info *all_info);
 int	button_release(int keycode, int x, int y, t_info_event *info_event);
 int	display_all(t_all_info *all_info);
@@ -219,5 +229,9 @@ void	free_distance_pixel(float **distance_pixel, int size);
 void	put_distance_pixel_float_max(float **distance_pixel);
 float	**init_distance_pixel(void);
 void	renitialise_display_info(t_display_info *display_info);
+t_point_3d	stereographic_projection(float coordinates_point[3], t_display_info *display_info);
 t_point_3d	perspective_projection(float coordinates_point[3], t_display_info *display_info);
+void	free_all_info(t_all_info *all_info);
+int free_all_info_sucess(t_all_info *all_info);
+void	free_vars(t_vars *vars);
 #endif

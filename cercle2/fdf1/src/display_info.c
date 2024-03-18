@@ -29,6 +29,7 @@ t_display_info 	*create_display_info(int nb_point_width, int nb_point_height, sh
 	if (point_min * -1 > size_max)
 		size_max = point_min * -1;
 	display_info -> point_max = point_max;
+	display_info -> height_max = nb_point_height;
 	create_vector_multiplicator(display_info->rotation_vector, 20, 15);
 	display_info -> width = nb_point_width;
 	display_info -> height = nb_point_height;
@@ -57,9 +58,10 @@ void	renitialise_display_info(t_display_info *display_info)
 	create_vector_multiplicator(display_info ->rotation_vector, ROTATION_X_START, ROTATION_Y_START);
 	display_info -> pov = M_PI / 2 - ( M_PI / (display_info -> distance_z_min) * 0.4) ;
 	display_info -> result_pov =  tanf(display_info -> pov);
-	display_info ->multiplier_value_z = - 1;
+	display_info -> multiplier_value_z = - 1;
 	display_info -> move_x = 0;
 	display_info -> move_y = 0;
 	display_info -> actual_color = 0;
 	display_info -> print_point = FALSE;
+	display_info -> projection_type = PERSPECTIVE;
 }
