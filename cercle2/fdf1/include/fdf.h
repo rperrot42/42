@@ -31,6 +31,11 @@
 #  define KEYCODE_M 46
 #  define KEYCODE_N 45
 #  define RIGHT_CLICK 2
+#  define KEYCODE_C 8
+#  define KEYCODE_ESC 53
+#  define KEYCODE_P 35
+#  define KEYCODE_R 15
+#  define KEYCODE_SP 49
 # else
 #  define KEYCODE_X 120
 #  define KEYCODE_Z 122

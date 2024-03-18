@@ -42,7 +42,7 @@ void	free_vars(t_vars *vars)
 			mlx_destroy_window(vars->mlx, vars->win);
 		if (vars->mlx)
 		{
-			mlx_destroy_display(vars->mlx);
+			//mlx_destroy_display(vars->mlx);
 			free(vars->mlx);
 		}
 		if (vars->img_info)

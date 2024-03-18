@@ -74,6 +74,7 @@ int change_value_min_z(t_display_info *display_info, t_move move)
 
 int	keycode_move(int keycode, t_all_info *all_info)
 {
+	ft_printf("%d\n", keycode);
 	if (keycode == KEYCODE_X)
 		return (change_multiplier_z(all_info->display_info, UP));
 	else if (keycode == KEYCODE_Z)
