@@ -54,12 +54,15 @@ static int rotation(t_display_info *display_info, t_move move)
 
 int change_value_min_z(t_display_info *display_info, t_move move)
 {
+	printf("%g %g\n",display_info->pov , M_PI/2);
 	if (move == UP)
 	{
 		if (display_info->pov > M_PI / 4)
-			display_info->pov -= ((M_PI / 2) - display_info->pov) * SPEED_ZOOM - 0.0000003;
+			display_info->pov -= ((M_PI / 2) - display_info->pov) * SPEED_ZOOM;
 		else
 			display_info->pov -= display_info->pov * SPEED_ZOOM;
+		if (display_info->pov >= M_PI / 2 - 0.000001)
+			display_info->pov = M_PI / 2 - 0.000001;
 	}
 	else
 	{
@@ -67,6 +70,8 @@ int change_value_min_z(t_display_info *display_info, t_move move)
 			display_info->pov += ((M_PI / 2) - display_info->pov) * SPEED_ZOOM;
 		else
 			display_info->pov += display_info->pov * SPEED_ZOOM;
+		if (display_info->pov >= M_PI / 2 - 0.000001)
+			display_info->pov = M_PI / 2 - 0.000001;
 	}
 	display_info -> result_pov = tanf(display_info->pov);
 	return (0);
@@ -74,7 +79,6 @@ int change_value_min_z(t_display_info *display_info, t_move move)
 
 int	keycode_move(int keycode, t_all_info *all_info)
 {
-	ft_printf("%d\n", keycode);
 	if (keycode == KEYCODE_X)
 		return (change_multiplier_z(all_info->display_info, UP));
 	else if (keycode == KEYCODE_Z)
