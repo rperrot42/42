@@ -63,14 +63,14 @@ short point_max, short point_min)
 
 static void	init_display_color(t_display_info *display_info)
 {
-	display_info -> color_negative[0] = 0x243566;
-	display_info -> color_mid[0] = 0x9d7153;
-	display_info -> color_null[0] = 0x527048;
-	display_info -> color_max[0] = 0xFFFFFF;
-	display_info -> color_negative[1] = 0xFFFFFF;
-	display_info -> color_mid[1] = 0x888888;
-	display_info -> color_null[1] = 0x000000;
-	display_info -> color_max[1] = 0xFFFFFF;
+	display_info -> color_negative[0] = COLOR_BLUE;
+	display_info -> color_mid[0] = COLOR_BROWN;
+	display_info -> color_null[0] = COLOR_GREEN;
+	display_info -> color_max[0] = COLOR_WHITE;
+	display_info -> color_negative[1] = COLOR_WHITE;
+	display_info -> color_mid[1] = COLOR_GREY;
+	display_info -> color_null[1] = COLOR_BLACK;
+	display_info -> color_max[1] = COLOR_WHITE;
 }
 
 void	renitialise_display_info(t_display_info *display_info)

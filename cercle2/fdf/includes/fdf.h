@@ -56,6 +56,13 @@
 # define FILE_EXTENSION_FDF ".fdf"
 # define ERROR_EXT_NO_VALIDE "Extension is not valide !\n"
 # define FILE_IS_NOT_DIRECTORY "the file is not in directory\n"
+# define COLOR_WHITE 0xFFFFFF
+# define COLOR_BLACK 0
+# define COLOR_BLUE 0x243566
+# define COLOR_GREEN 0x527048
+# define COLOR_BROWN 0x9d7153
+# define COLOR_GREY 0x888888
+
 typedef enum e_move
 {
 	UP,
