@@ -27,21 +27,31 @@ int exec_cmd(char *cmd, char **env)
 	char	**arg;
 	int		i;
 
+	elmnt_path = NULL;
 	arg = ft_split(cmd,' ');
-	elmnt_path = ft_split(env[search_path_env(env)] + 5, ':');
-	path_test = ft_strjoin_three(*elmnt_path, "/", arg[0]);
-	if (!path_test)
-		clean_execve(path_test, arg, elmnt_path);
-	i = -1;
-	while (elmnt_path[++i] && access(path_test, X_OK))
+	if (!arg || !*arg)
+		error_execve(NULL, cmd, arg, NULL);
+	if (!access(arg[0], X_OK))
+		path_test = arg[0];
+	else
 	{
-		free(path_test);
-		path_test = NULL;
-		if (*elmnt_path)
+		if (!*env)
+			error_execve(NULL, cmd, arg, NULL);
+		elmnt_path = ft_split(env[search_path_env(env)] + 5, ':');
+		path_test = ft_strjoin_three(*elmnt_path, "/", arg[0]);
+		if (!path_test)
+			clean_execve(path_test, arg, elmnt_path);
+		i = -1;
+		while (elmnt_path[++i] && access(path_test, X_OK))
 		{
-			path_test = ft_strjoin_three(elmnt_path[i] , "/", arg[0]);
-			if (!path_test)
-				clean_execve(path_test, arg, elmnt_path);
+			free(path_test);
+			path_test = NULL;
+			if (*elmnt_path)
+			{
+				path_test = ft_strjoin_three(elmnt_path[i], "/", arg[0]);
+				if (!path_test)
+					clean_execve(path_test, arg, elmnt_path);
+			}
 		}
 	}
 	if (access(path_test, X_OK))
@@ -63,7 +73,7 @@ static int	search_path_env(char **env)
 
 static void	error_execve(char *path_test, char *cmd, char **arg, char **elmnt_path)
 {
-	if (errno == 2)
+	if (errno == 2 || !*cmd)
 	{
 		ft_putstr_fd("pipex: command not found: ", 2);
 		ft_putstr_fd(cmd, 2);
@@ -79,10 +89,12 @@ static void clean_execve(char *path_test, char **arg, char **elmnt_path)
 {
 	close(0);
 	close(1);
-	free_split(arg);
-	free_split(elmnt_path);
-	free(path_test);
-	exit(1);
+	if (arg)
+		free_split(arg);
+	if (elmnt_path)
+		free_split(elmnt_path);
+	if (path_test)
+		free(path_test);
 }
 
 static void free_split(char **split)

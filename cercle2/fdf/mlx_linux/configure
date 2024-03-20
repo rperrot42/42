@@ -24,38 +24,38 @@ get_xlib_include_path(){
 	local result=""
 
 	for inc in \
-		/usr/X11/includes          \
-		/usr/X11R6/includes        \
-		/usr/X11R5/includes        \
-		/usr/X11R4/includes        \
+		/usr/X11/include          \
+		/usr/X11R6/include        \
+		/usr/X11R5/include        \
+		/usr/X11R4/include        \
 								\
-		/usr/includes              \
-		/usr/includes/X11          \
-		/usr/includes/X11R6        \
-		/usr/includes/X11R5        \
-		/usr/includes/X11R4        \
+		/usr/include              \
+		/usr/include/X11          \
+		/usr/include/X11R6        \
+		/usr/include/X11R5        \
+		/usr/include/X11R4        \
 								\
-		/usr/local/X11/includes    \
-		/usr/local/X11R6/includes  \
-		/usr/local/X11R5/includes  \
-		/usr/local/X11R4/includes  \
+		/usr/local/X11/include    \
+		/usr/local/X11R6/include  \
+		/usr/local/X11R5/include  \
+		/usr/local/X11R4/include  \
 								\
-		/usr/local/includes/X11    \
-		/usr/local/includes/X11R6  \
-		/usr/local/includes/X11R5  \
-		/usr/local/includes/X11R4  \
+		/usr/local/include/X11    \
+		/usr/local/include/X11R6  \
+		/usr/local/include/X11R5  \
+		/usr/local/include/X11R4  \
 								\
-		/usr/X386/includes         \
-		/usr/x386/includes         \
-		/usr/XFree86/includes/X11  \
+		/usr/X386/include         \
+		/usr/x386/include         \
+		/usr/XFree86/include/X11  \
 								\
-		/usr/local/includes        \
-		/usr/athena/includes       \
-		/usr/local/x11r5/includes  \
-		/usr/lpp/Xamples/includes  \
+		/usr/local/include        \
+		/usr/athena/include       \
+		/usr/local/x11r5/include  \
+		/usr/lpp/Xamples/include  \
 								\
-		/usr/openwin/includes      \
-		/usr/openwin/share/includes
+		/usr/openwin/include      \
+		/usr/openwin/share/include
 	do
 		if [ -f "$inc/X11/Xlib.h" -a -f "$inc/X11/extensions/XShm.h" ]; then
 			result=$inc

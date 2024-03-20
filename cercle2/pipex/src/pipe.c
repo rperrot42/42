@@ -114,7 +114,7 @@ void last_execve(char **argv, char **env, int fd[2], int argc)
 {
 	int	fd_file_exit;
 
-	fd_file_exit = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	fd_file_exit = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC);
 	if (fd_file_exit == -1)
 		return (error_close(fd[0]), exit(1));
 	if (dup2(fd[0], 0) == -1)
@@ -177,11 +177,10 @@ int	pipep(int argc, char **argv, char **env, t_bool here_doc)
 		return (-1);
 	pid = fork();
 	if (pid == -1)
-		return  (-1);
+		return (-1);
 	if (pid == 0)
 		first_execve(argv, env, fd, here_doc);
-	if (error_close(fd[1]) == -1)
-		return (error_close(fd[0]), exit(1), -1);
+	close(fd[1]);
 	if ((argc > 5 && here_doc == FALSE) || (argc > 6 && here_doc == TRUE))
 		fd[0] = mid_execve(argv, env, fd, argc);
 	wait(NULL);

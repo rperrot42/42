@@ -15,7 +15,6 @@
 
 int main (int argc, char **argv, char **env)
 {
-
 	errno = 0;
 	t_bool here_doc;
 
@@ -24,7 +23,8 @@ int main (int argc, char **argv, char **env)
 		here_doc = TRUE;
 	if ((argc >= 5 && here_doc == FALSE) || (argc >= 6 && here_doc == TRUE))
 		pipep(argc, argv, env, here_doc);
-	else {
+	else
+	{
 		perror("Error: Insufficient arguments provided. Please provide the required arguments.");
 		return (1);
 	}
