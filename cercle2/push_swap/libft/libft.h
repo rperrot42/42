@@ -44,7 +44,7 @@ typedef struct s_stack
 	struct s_element	*first;
 }	t_stack;
 
-typedef enum s_bool
+typedef enum e_bool
 {
 	FALSE,
 	TRUE

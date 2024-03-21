@@ -42,8 +42,8 @@
 #  define KEYCODE_ESC 65307
 # endif
 # define LEFT_CLICK 1
-# define HEIGHT 600
-# define WIDTH 800
+# define HEIGHT 1600
+# define WIDTH 2000
 # define SCROLING_UP 5
 # define SCROLING_DOWN 4
 # define ROTATION_MOVE 0.005
@@ -54,8 +54,10 @@
 # define ROTATION_Y_START -50
 # define COLOR_MAX 2
 # define FILE_EXTENSION_FDF ".fdf"
-# define ERROR_EXT_NO_VALIDE "Extension is not valide !\n"
-# define FILE_IS_NOT_DIRECTORY "the file is not in directory\n"
+# define ERROR_EXT_NO_VALIDE "Extension is not valide.\n"
+# define FILE_IS_NOT_DIRECTORY "the file is not accessible.\n"
+# define ERROR_ARGS "The number of arguments is invalid.\n"
+# define EMPTY_FILE "The file is empty.\n"
 # define COLOR_WHITE 0xFFFFFF
 # define COLOR_BLACK 0
 # define COLOR_BLUE 0x243566

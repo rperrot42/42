@@ -10,7 +10,7 @@ INCLUDE_DIR = includes
 
 LIBFT_DIRECTORY = ./libft/
 
-FLAGS =  -g3 -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 
 INClUDE = $(INCLUDE_DIR)/fdf.h
 
@@ -34,7 +34,7 @@ SRC = create_color.c \
 
 SRC_PATH = src/
 
-CC = gcc
+CC = cc
 
 OS := $(shell uname)
 
@@ -47,24 +47,35 @@ all:$(NAME)
 IFLAGS = -I libft \
 			-I $(INCLUDE_DIR)
 
+ifeq ($(OS), Linux)
+	DIR_MLX = mlx_linux
+else
+	DIR_MLX = mlx
+endif
+
+
 $(DIR_OBJS)/%.o: $(SRC_PATH)%.c $(INClUDE) | $(DIR_OBJS)
 ifeq ($(OS), Linux)
 	$(CC)  $(IFLAGS) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 else
 	$(CC)  $(IFLAGS) $(FLAGS) -Imlx -c $< -o $@
 endif
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) mlx
 ifeq ($(OS), Linux)
 	$(CC) $(OBJ)  -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) $(LIBFT)
 else
 	$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LIBFT)
 endif
+
+bonus:all
+
 $(DIR_OBJS):
 	mkdir -p $(DIR_OBJS)
 
 clean:
 	rm -rf $(DIR_OBJS)
 	$(MAKE) -C $(LIBFT_DIRECTORY) clean
+	$(MAKE) -C $(DIR_MLX) clean
 
 $(LIBFT): FORCE
 	$(MAKE) -C $(LIBFT_DIRECTORY)
@@ -73,6 +84,10 @@ fclean:
 	rm -f $(NAME)
 	rm -rf $(DIR_OBJS)
 	$(MAKE) -C $(LIBFT_DIRECTORY) fclean
+	$(MAKE) -C $(DIR_MLX) clean
+
+mlx: FORCE
+	$(MAKE) -C $(DIR_MLX)
 
 FORCE:
 

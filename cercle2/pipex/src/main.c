@@ -16,13 +16,16 @@
 int main (int argc, char **argv, char **env)
 {
 	errno = 0;
-	t_bool here_doc;
+	t_pipex pipex;
 
-	here_doc = FALSE;
+	pipex.here_doc = FALSE;
+	pipex.env = env;
+	pipex.argv = argv;
+	pipex.argc = argc;
 	if (!ft_strncmp("here_doc", argv[1], 9))
-		here_doc = TRUE;
-	if ((argc >= 5 && here_doc == FALSE) || (argc >= 6 && here_doc == TRUE))
-		pipep(argc, argv, env, here_doc);
+		pipex.here_doc  = TRUE;
+	if ((argc >= 5 && pipex.here_doc  == FALSE) || (argc >= 6 && pipex.here_doc  == TRUE))
+		pipep(&pipex);
 	else
 	{
 		perror("Error: Insufficient arguments provided. Please provide the required arguments.");

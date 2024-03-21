@@ -36,6 +36,8 @@ int	main(int argc, char **argv)
 		mlx_loop_hook(all_info->vars->mlx, display_all, all_info);
 		mlx_loop(all_info->vars->mlx);
 	}
+	else
+		return (ft_putstr_fd(ERROR_ARGS, 2), 1);
 	return (0);
 }
 

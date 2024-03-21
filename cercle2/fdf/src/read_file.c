@@ -39,7 +39,7 @@ short *point_3d_max, short *point_3d_min)
 	*point_3d_max = SHRT_MIN;
 	*point_3d_min = SHRT_MAX;
 	if (!lst_file)
-		return (NULL);
+		return (ft_putstr_fd(EMPTY_FILE, 2), NULL);
 	matrix_3d = create_matrix_point3d(&lst_file, \
 	i - 1, point_3d_max, point_3d_min);
 	if (matrix_3d)

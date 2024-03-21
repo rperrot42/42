@@ -26,6 +26,7 @@ int exec_cmd(char *cmd, char **env)
 	char	*path_test;
 	char	**arg;
 	int		i;
+	int		result_search_path_env;
 
 	elmnt_path = NULL;
 	arg = ft_split(cmd,' ');
@@ -37,7 +38,10 @@ int exec_cmd(char *cmd, char **env)
 	{
 		if (!*env)
 			error_execve(NULL, cmd, arg, NULL);
-		elmnt_path = ft_split(env[search_path_env(env)] + 5, ':');
+		result_search_path_env= search_path_env(env);
+		if (result_search_path_env == -1)
+			error_execve(NULL, cmd, arg,NULL);
+		elmnt_path = ft_split(env[result_search_path_env] + 5, ':');
 		path_test = ft_strjoin_three(*elmnt_path, "/", arg[0]);
 		if (!path_test)
 			clean_execve(path_test, arg, elmnt_path);
@@ -68,7 +72,9 @@ static int	search_path_env(char **env)
 	i = 0;
 	while (env[i] && ft_strncmp("PATH", env[i], 4))
 		i++;
-	return (i);
+	if (env[i])
+		return (i);
+	return (-1);
 }
 
 static void	error_execve(char *path_test, char *cmd, char **arg, char **elmnt_path)

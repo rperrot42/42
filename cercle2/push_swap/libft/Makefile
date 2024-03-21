@@ -65,6 +65,8 @@ NAME = libft.a
 
 CC = cc
 
+DIR_FT_PRINTF = ft_printf
+
 FLAGS = -Werror -Wall -Wextra
 
 OBJ = $(addprefix $(DIR_OBJS)/, $(SRC:.c=.o))
@@ -84,7 +86,7 @@ clean:
 	rm -rf $(DIR_OBJS)
 $(DIR_OBJS):
 	mkdir -p $(DIR_OBJS)
-	mkdir -p $(DIR_OBJS)/ft_printf
+	mkdir -p $(DIR_OBJS)/$(DIR_FT_PRINTF)
 
 fclean:clean
 	rm -f $(NAME)

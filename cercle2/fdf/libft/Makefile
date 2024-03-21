@@ -63,9 +63,9 @@ DIR_OBJS = .obj
 
 NAME = libft.a
 
-CC = gcc
+CC = cc
 
-FLAGS = -Werror -Wall -Wextra -g3
+FLAGS = -Werror -Wall -Wextra
 
 OBJ = $(addprefix $(DIR_OBJS)/, $(SRC:.c=.o))
 
