@@ -54,8 +54,10 @@ short x, short y, t_display_info *display_info)
 	multiplication_matrix_3x1(display_info->rotation_vector, coords, result);
 	if (display_info -> projection_type == PERSPECTIVE)
 		new_point_2d = perspective_projection(result, display_info);
-	else
+	else if (display_info -> projection_type == STEREOGRAPHIC)
 		new_point_2d = stereographic_projection(result, display_info);
+	else
+		new_point_2d = isometrique_projection(result, display_info);
 	if (point_z.color)
 		new_point_2d.color = point_z.color;
 	else

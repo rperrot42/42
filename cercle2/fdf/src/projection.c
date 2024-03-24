@@ -19,7 +19,7 @@ t_display_info *display_info)
 	float		x;
 	float		y;
 
-	coordinates_point[2] = coordinates_point[2] + display_info->distance_z_min;
+	coordinates_point[2] = coordinates_point[2] * -1 + display_info->distance_z_min;
 	x = coordinates_point[0] * display_info -> distance_point \
 	* display_info->result_pov;
 	y = coordinates_point[1] * display_info -> distance_point \
@@ -54,6 +54,20 @@ t_display_info *display_info)
 	-1)) / coordinates_point[2] + WIDTH / 2 + display_info->move_x;
 	new_point_2d.y = y / coordinates_point[2] + HEIGHT / 2 \
 	+ display_info->move_y;
+	new_point_2d.z = coordinates_point[2];
+	return (new_point_2d);
+}
+
+t_point_3d	isometrique_projection(float coordinates_point[3], \
+t_display_info *display_info)
+{
+	t_point_3d	new_point_2d;
+
+	new_point_2d.x = 0.707 * (coordinates_point[0] - coordinates_point[1]) * \
+	display_info->distance_point + WIDTH / 2 + display_info->move_x;
+	new_point_2d.y = ((0.8165 * coordinates_point[2] * -1) - ((coordinates_point[0]\
+	+ coordinates_point[1]) * 0.408)) * display_info->distance_point + \
+	display_info->move_y + HEIGHT / 2;
 	new_point_2d.z = coordinates_point[2];
 	return (new_point_2d);
 }

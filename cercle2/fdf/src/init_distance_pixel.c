@@ -53,6 +53,6 @@ void	put_distance_pixel_float_max(float **distance_pixel)
 	{
 		j = -1;
 		while (++j < WIDTH)
-			distance_pixel[i][j] = INT_MAX;
+			distance_pixel[i][j] = (float)INT_MAX;
 	}
 }

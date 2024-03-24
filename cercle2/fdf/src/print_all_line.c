@@ -75,7 +75,8 @@ t_bool black_color)
 	}
 	else
 	{
-		img_info->distance_pixel[display_point.y][display_point.x] = INT_MAX;
+		img_info->distance_pixel[display_point.y][display_point.x] = \
+		(float)INT_MAX;
 		my_mlx_pixel_put(img_info, display_point.x, display_point.y, 0);
 	}
 }

@@ -99,7 +99,7 @@ int	keycode_move(int keycode, t_all_info *all_info)
 		(all_info->display_info->actual_color + 1) % COLOR_MAX;
 	else if (keycode == KEYCODE_R)
 		all_info->display_info->projection_type = \
-		(all_info->display_info->projection_type + 1) % 2;
+		(all_info->display_info->projection_type + 1) % 3;
 	else if (keycode == KEYCODE_ESC)
 		free_all_info_sucess(all_info);
 	return (0);

@@ -39,7 +39,7 @@ short point_max, short point_min)
 		multiplier = (WIDTH * 0.7 / nb_point_width);
 	else
 		multiplier = (HEIGHT * 0.7 / nb_point_height);
-	display_info ->distance_point = multiplier;
+	display_info -> distance_point = multiplier;
 	display_info -> point_min = point_min;
 	renitialise_display_info(display_info);
 	init_display_color(display_info);
@@ -81,10 +81,10 @@ void	renitialise_display_info(t_display_info *display_info)
 	display_info -> pov = M_PI / 2 - (M_PI / (display_info -> \
 	distance_z_min) * 0.4);
 	display_info -> result_pov = tanf(display_info -> pov);
-	display_info -> multiplier_value_z = -1;
+	display_info -> multiplier_value_z = 1;
 	display_info -> move_x = 0;
 	display_info -> move_y = 0;
 	display_info -> actual_color = 0;
 	display_info -> print_point = FALSE;
-	display_info -> projection_type = PERSPECTIVE;
+	display_info -> projection_type = ISOMETRIC;
 }

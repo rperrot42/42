@@ -90,7 +90,7 @@ t_img_info *img_info)
 		}
 		else if (inf_seg->black_color == TRUE)
 		{
-			img_info->distance_pixel[y][x] = INT_MAX;
+			img_info->distance_pixel[y][x] = (float)INT_MAX;
 			my_mlx_pixel_put(img_info, x, y, a->color);
 		}
 	}

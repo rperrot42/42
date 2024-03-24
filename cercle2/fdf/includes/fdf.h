@@ -82,7 +82,8 @@ typedef struct s_print_point
 typedef enum e_projection
 {
 	STEREOGRAPHIC,
-	PERSPECTIVE
+	PERSPECTIVE,
+	ISOMETRIC
 }	t_projection;
 
 typedef struct s_pixel
@@ -256,4 +257,6 @@ void			free_all_info(t_all_info *all_info);
 int				free_all_info_sucess(t_all_info *all_info);
 void			free_vars(t_vars *vars);
 t_all_info		*init_all_info(char *name);
+t_point_3d		isometrique_projection(float coordinates_point[3], \
+t_display_info *display_info);
 #endif
