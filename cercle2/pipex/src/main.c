@@ -10,26 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../include/pipex.h"
+#include "pipex.h"
 
-
-int main (int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	errno = 0;
-	t_pipex pipex;
+	t_pipex		pipex;
+	int			back_value_pipep;
 
 	pipex.here_doc = FALSE;
 	pipex.env = env;
 	pipex.argv = argv;
 	pipex.argc = argc;
-	if (!ft_strncmp("here_doc", argv[1], 9))
-		pipex.here_doc  = TRUE;
-	if ((argc >= 5 && pipex.here_doc  == FALSE) || (argc >= 6 && pipex.here_doc  == TRUE))
-		pipep(&pipex);
+	pipex.indice_pid = -1;
+	if (argc >= 2 && !ft_strncmp(HERE_DOC, argv[1], ft_strlen(HERE_DOC) + 1))
+		pipex.here_doc = TRUE;
+	if (argc - (pipex.here_doc == TRUE) >= 5)
+	{
+		back_value_pipep = ft_pipex(&pipex);
+		wait_all_pid(&pipex);
+		print_error(back_value_pipep, &pipex, 0);
+	}
 	else
 	{
-		perror("Error: Insufficient arguments provided. Please provide the required arguments.");
-		return (1);
+		ft_putstr_fd(ERROR_ARGS, STDERR_FILENO);
+		return (EXIT_FAILURE);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

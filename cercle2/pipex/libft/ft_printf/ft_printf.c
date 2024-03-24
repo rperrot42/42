@@ -42,7 +42,7 @@ static int	ft_print_type(const char c, va_list *args)
 	if (!c)
 		return (-1);
 	if (c == 'd' || c == 'i')
-		return (ft_putnbr(va_arg(*args, int)));
+		return (ft_putnbr_printf(va_arg(*args, int)));
 	else if (c == 'c')
 		return (ft_putchar((char)va_arg(*args, int)));
 	else if (c == 's')

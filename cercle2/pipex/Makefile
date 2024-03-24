@@ -3,7 +3,9 @@ MAKE = make
 SRC = main.c \
 	exec.c \
 	pipe.c \
-	error.c
+	error.c \
+	here_doc.c \
+	exec_utils.c
 
 NAME = pipex
 
@@ -13,12 +15,15 @@ DIR_OBJS = .obj
 
 LIBFT_DIRECTORY = ./libft/
 
-FLAGS = -Werror -Wall -Werror
+FLAGS = -Werror -Wall -Wextra
 
-INClUDE = pipex.h
+INClUDES = -Iincludes -Ilibft
 
+FILE_INCLUDES = includes/pipex.h
 
 SRC_PATH = src/
+
+LIBFT_INCLUDE = libft
 
 CC = cc
 
@@ -26,11 +31,13 @@ OBJ = $(addprefix $(DIR_OBJS)/, $(SRC:.c=.o))
 
 all:$(NAME)
 
-$(NAME): $(OBJ) | $(LIBFT)
-	gcc -g3 $(FLAGS) $^ -o $@ $(LIBFT)
+bonus:all
 
-$(DIR_OBJS)/%.o: $(SRC_PATH)%.c | $(DIR_OBJS)
-	gcc -g3 $(FLAGS) -c $< -o $@
+$(NAME): $(OBJ)  $(LIBFT)
+	gcc $(FLAGS) $^ -o $@ $(LIBFT)
+
+$(DIR_OBJS)/%.o: $(SRC_PATH)%.c Makefile $(FILE_INCLUDES) | $(DIR_OBJS)
+	gcc $(FLAGS) -c $< -o $@ $(INClUDES)
 
 $(DIR_OBJS):
 	mkdir -p $(DIR_OBJS)
@@ -39,7 +46,7 @@ clean:
 	rm -rf $(DIR_OBJS)
 	$(MAKE) -C $(LIBFT_DIRECTORY) clean
 
-$(LIBFT):
+$(LIBFT): FORCE
 	$(MAKE) -C $(LIBFT_DIRECTORY)
 
 fclean:
@@ -49,5 +56,7 @@ fclean:
 
 re: fclean all
 
-.PHONY: all re clean fclean re
+FORCE:
+
+.PHONY: all re clean fclean re FORCE
 

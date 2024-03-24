@@ -10,64 +10,106 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../include/pipex.h"
+#include "pipex.h"
 
 static int	search_path_env(char **env);
 
-static void	error_execve(char *path_test, char *cmd, char **arg, char **elmnt_path);
+static void	find_elmnt_path(t_exec_info *exec_info, char **env);
 
-static void free_split(char **split);
+static void	find_path_test(t_exec_info *exec_info, char **env);
 
-static void clean_execve(char *path_test, char **arg, char **elmnt_path);
-
-int exec_cmd(char *cmd, char **env)
+int	exec_cmd(char *cmd, char **env)
 {
-	char	**elmnt_path;
-	char	*path_test;
-	char	**arg;
-	int		i;
-	int		result_search_path_env;
+	t_exec_info	exec_info;
 
-	elmnt_path = NULL;
-	arg = ft_split(cmd,' ');
-	if (!arg || !*arg)
-		error_execve(NULL, cmd, arg, NULL);
-	if (!access(arg[0], X_OK))
-		path_test = arg[0];
-	else
+	init_exec_info(&exec_info);
+	if (!*cmd)
 	{
-		if (!*env)
-			error_execve(NULL, cmd, arg, NULL);
-		result_search_path_env= search_path_env(env);
-		if (result_search_path_env == -1)
-			error_execve(NULL, cmd, arg,NULL);
-		elmnt_path = ft_split(env[result_search_path_env] + 5, ':');
-		path_test = ft_strjoin_three(*elmnt_path, "/", arg[0]);
-		if (!path_test)
-			clean_execve(path_test, arg, elmnt_path);
-		i = -1;
-		while (elmnt_path[++i] && access(path_test, X_OK))
+		if (env && *env)
+			exit(EXIT_EMPTY_CMD);
+		else
+			exit(EXIT_ENV);
+	}
+	exec_info.arg = ft_split(cmd, ' ');
+	if (!exec_info.arg || !*(exec_info.arg))
+		error_execve(&exec_info, EXIT_MALLOC);
+	find_path_test(&exec_info, env);
+	if (access(exec_info.path_test, X_OK))
+	{
+		if (env && *env)
+			error_execve(&exec_info, EXIT_CMD_NOT_FOUND);
+		else
+			error_execve(&exec_info, EXIT_ENV);
+	}
+	if (execve(exec_info.path_test, exec_info.arg, env) == -1)
+		error_execve(&exec_info, EXIT_EXECVE_FAIL);
+	return (0);
+}
+
+static void	find_elmnt_path(t_exec_info *exec_info, char **env)
+{
+	if (env && *env)
+	{
+		exec_info->result_search_path_env = search_path_env(env);
+		if (exec_info->result_search_path_env == -1)
+			error_execve(exec_info, EXIT_CMD_NOT_FOUND);
+		exec_info->elmnt_path = ft_split(\
+			env[exec_info->result_search_path_env] + 5, ':');
+	}
+	else
+		exec_info->elmnt_path = ft_split(PATH_DEFAULT + 5, ':');
+	if (!exec_info->elmnt_path)
+		error_execve(exec_info, EXIT_MALLOC);
+}
+
+static t_bool	cmd_is_path_test(t_exec_info *exec_info, char **env)
+{
+	if (ft_strchr(exec_info->arg[0], '/'))
+	{
+		if (!access(exec_info->arg[0], X_OK))
+			exec_info->path_test = exec_info->arg[0];
+		else
 		{
-			free(path_test);
-			path_test = NULL;
-			if (*elmnt_path)
+			if (!env || !*env)
+				error_execve(exec_info, EXIT_ENV);
+			else
+				error_execve(exec_info, EXIT_CMD_NOT_DIRECTORY);
+		}
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+static void	find_path_test(t_exec_info *exec_info, char **env)
+{
+	int	i;
+
+	if (cmd_is_path_test(exec_info, env) == FALSE)
+	{
+		find_elmnt_path(exec_info, env);
+		exec_info->path_test = ft_strjoin_three(*(\
+		exec_info->elmnt_path), "/", exec_info->arg[0]);
+		if (!exec_info->path_test)
+			error_execve(exec_info, EXIT_MALLOC);
+		i = -1;
+		while (exec_info->elmnt_path[++i] && access(exec_info->path_test, X_OK))
+		{
+			free(exec_info->path_test);
+			exec_info->path_test = NULL;
+			if (*exec_info->elmnt_path)
 			{
-				path_test = ft_strjoin_three(elmnt_path[i], "/", arg[0]);
-				if (!path_test)
-					clean_execve(path_test, arg, elmnt_path);
+				exec_info->path_test = ft_strjoin_three(\
+				exec_info->elmnt_path[i], "/", exec_info->arg[0]);
+				if (!exec_info->path_test)
+					error_execve(exec_info, EXIT_MALLOC);
 			}
 		}
 	}
-	if (access(path_test, X_OK))
-		error_execve(path_test, cmd, arg, elmnt_path);
-	if (execve(path_test, arg, env) == -1)
-		error_execve(path_test, cmd, arg, elmnt_path);
-	return(0);
 }
 
 static int	search_path_env(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env[i] && ft_strncmp("PATH", env[i], 4))
@@ -75,40 +117,4 @@ static int	search_path_env(char **env)
 	if (env[i])
 		return (i);
 	return (-1);
-}
-
-static void	error_execve(char *path_test, char *cmd, char **arg, char **elmnt_path)
-{
-	if (errno == 2 || !*cmd)
-	{
-		ft_putstr_fd("pipex: command not found: ", 2);
-		ft_putstr_fd(cmd, 2);
-		write(2, "\n", 1);
-	}
-	else
-		perror("pipex: ");
-	clean_execve(path_test, arg, elmnt_path);
-	exit(1);
-}
-
-static void clean_execve(char *path_test, char **arg, char **elmnt_path)
-{
-	close(0);
-	close(1);
-	if (arg)
-		free_split(arg);
-	if (elmnt_path)
-		free_split(elmnt_path);
-	if (path_test)
-		free(path_test);
-}
-
-static void free_split(char **split)
-{
-	int i;
-
-	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
 }

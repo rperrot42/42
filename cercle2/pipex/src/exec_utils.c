@@ -1,40 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rperrot <rperrot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 18:04:57 by rperrot           #+#    #+#             */
-/*   Updated: 2023/12/05 18:59:49 by rperrot          ###   ########.fr       */
+/*   Created: 2024/03/24 17:40:37 by rperrot           #+#    #+#             */
+/*   Updated: 2024/03/24 17:40:37 by rperrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "pipex.h"
 
-int	ft_putnbr_printf(int n)
+void	init_exec_info(t_exec_info *exec_info)
 {
-	int	len;
-	int	signe;
-
-	signe = 0;
-	len = 0;
-	if (n == -2147483648)
-		return (ft_putstr("-2147483648"));
-	if (n < 0)
-	{
-		signe = 1;
-		n = -n;
-		if (ft_putchar('-') < 0)
-			return (0);
-	}
-	if (n >= 10)
-		len = ft_putnbr_printf(n / 10);
-	if (len == -1)
-		return (-1);
-	if (ft_putchar(n % 10 + '0') < 0)
-		return (-1);
-	if (signe)
-		len++;
-	return (len + 1);
+	exec_info->path_test = NULL;
+	exec_info->arg = NULL;
+	exec_info->elmnt_path = NULL;
 }

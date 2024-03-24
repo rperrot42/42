@@ -19,7 +19,7 @@
 
 int		ft_printf(const char *s, ...);
 int		ft_putchar(char c);
-int		ft_putnbr(int n);
+int		ft_putnbr_printf(int n);
 int		ft_putnbr_base_long(unsigned long long int nb, char *base, \
 	unsigned long long int len_base);
 size_t	ft_strlen(const char *str);

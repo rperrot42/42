@@ -100,7 +100,7 @@ char	**ft_split(char const *s, char c)
 
 	if (s == NULL)
 		return (NULL);
-	if(!*s)
+	if (!*s)
 		return (NULL);
 	nb_str = nb_str_in_s(s, c);
 	return (ft_create_tab_split(s, c, nb_str));

@@ -69,19 +69,19 @@ FLAGS = -Werror -Wall -Wextra
 
 OBJ = $(addprefix $(DIR_OBJS)/, $(SRC:.c=.o))
 
-INCLUDE = libft.h
+INCLUDE = libft.h ft_printf/ft_printf.h
 
 $(NAME):$(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
 all:$(NAME)
 
-
-$(DIR_OBJS)/%.o: %.c $(INCLUDE) | $(DIR_OBJS)
+$(DIR_OBJS)/%.o: %.c $(INCLUDE) Makefile | $(DIR_OBJS)
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(DIR_OBJS)
+
 $(DIR_OBJS):
 	mkdir -p $(DIR_OBJS)
 	mkdir -p $(DIR_OBJS)/ft_printf
