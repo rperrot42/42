@@ -65,6 +65,7 @@ int	change_value_min_z(t_display_info *display_info, t_move move)
 			display_info->pov -= display_info->pov * SPEED_ZOOM;
 		if (display_info->pov >= M_PI / 2 - 0.000001)
 			display_info->pov = M_PI / 2 - 0.000001;
+		display_info->zoom -= display_info->zoom * 0.1;
 	}
 	else
 	{
@@ -74,6 +75,7 @@ int	change_value_min_z(t_display_info *display_info, t_move move)
 			display_info->pov += display_info->pov * SPEED_ZOOM;
 		if (display_info->pov >= M_PI / 2 - 0.000001)
 			display_info->pov = M_PI / 2 - 0.000001;
+		display_info->zoom += display_info->zoom * 0.1;
 	}
 	display_info -> result_pov = tanf(display_info->pov);
 	return (0);

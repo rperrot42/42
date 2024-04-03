@@ -53,7 +53,6 @@ else
 	DIR_MLX = mlx
 endif
 
-
 $(DIR_OBJS)/%.o: $(SRC_PATH)%.c Makefile $(INClUDE) | $(DIR_OBJS)
 ifeq ($(OS), Linux)
 	$(CC)  $(IFLAGS) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@

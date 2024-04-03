@@ -150,6 +150,7 @@ typedef struct s_display_info
 	char			actual_color;
 	t_bool			print_point;
 	short			height_max;
+	float			zoom;
 }	t_display_info;
 
 typedef struct s_info_segment

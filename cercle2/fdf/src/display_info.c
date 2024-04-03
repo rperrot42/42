@@ -87,4 +87,5 @@ void	renitialise_display_info(t_display_info *display_info)
 	display_info -> actual_color = 0;
 	display_info -> print_point = FALSE;
 	display_info -> projection_type = ISOMETRIC;
+	display_info -> zoom = 1;
 }
